@@ -4,7 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    return HttpResponse("<h1>Olá Mundo</h1>")
+    return render(request,'index.html')
 def heloisa(request):
     return HttpResponse("<h1>Olá Heloisa</h1>")
 def tabuada2(request):
@@ -15,3 +15,8 @@ def tabuada2(request):
         texto+=f'<h1>{n} x {numero}={resultado}</h1>'
 
     return HttpResponse(texto)
+
+def calcular_imc(request,altura,peso):
+    altura=altura/100.0
+    resposta=f'O Valor do IMC é {(peso/(altura*altura)):.2f}'
+    return HttpResponse(resposta)

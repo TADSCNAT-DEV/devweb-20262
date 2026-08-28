@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+<body>
+    <header>
+        <h1 class="title is-1">Calculadora de IMC</h1>
+    </header>
+    <main>
+        <section class="hero is-link">
+            <div class="hero-body">
+                <form id="imc-form"  action="calcular/">
+                    <label class="label">Altura (m):</label>
+                    <div class="control">
+                        <input type="number" id="altura" name="altura" step="0.01" class="input" required>
+                    </div>
+                    <label class="label">Peso (kg):</label>
+                    <div class="control">
+                        <input type="number" id="peso" name="peso" step="0.1" class="input" required>
+                    </div>
+                    <button type="submit" class="button is-primary">Calcular IMC</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; 2026 Calculadora de IMC</p>
+        </div>
+    </footer>
+</body>
+</html>
