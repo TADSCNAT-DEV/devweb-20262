@@ -16,7 +16,24 @@ def tabuada2(request):
 
     return HttpResponse(texto)
 
-def calcular_imc(request,altura,peso):
+def calcular_imc(request):
+    altura=float(request.GET.get("altura"))
+    peso=float(request.GET.get("peso"))
     altura=altura/100.0
-    resposta=f'O Valor do IMC é {(peso/(altura*altura)):.2f}'
-    return HttpResponse(resposta)
+    imc=peso/(altura*altura)
+    if imc < 18.5:
+        classificacao = 'Abaixo do peso'
+    elif imc < 24.9:
+        classificacao = 'Peso normal'
+    elif imc < 29.9:
+        classificacao = 'Sobrepeso'
+    else:
+        classificacao = 'Obesidade'
+    #resposta=f'O Valor do IMC é {(peso/(altura*altura)):.2f}'
+    contexto={
+        'peso':peso,
+        'altura':altura,
+        'imc':f'{imc:.2f}',
+        'classificacao':classificacao,
+    }
+    return render(request,'resultado.html',context=contexto)

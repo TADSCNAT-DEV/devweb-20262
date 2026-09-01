@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado IMC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Resultado do Cálculo do IMC</h1>
+            <div class="box">
+                <p><strong>Peso:</strong> {{ peso }} kg</p>
+                <p><strong>Altura:</strong> {{ altura }} m</p>
+                <p><strong>IMC:</strong> {{ imc }}</p>
+                <p><strong>Classificação:</strong> {{ classificacao }}</p>
+            </div>
+            <div class="has-text-centered">
+                <a href="/imc" class="button is-primary">Calcular Novamente</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
