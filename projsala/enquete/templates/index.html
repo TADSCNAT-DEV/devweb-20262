@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquete</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+<body>
+    <header>
+        <h1 class="title is-1 has-text-centered mt-4">Enquete</h1>
+    </header>
+    <main>
+        <section class="hero is-link">
+            <div class="hero-body">
+                <div class="container">
+                    <form id="enquete-form" action="votar/" method="post">
+                        {% csrf_token %}
+                        <h2 class="subtitle is-3">{{ pergunta }}</h2>
+                        {% for alternativa in alternativas %}
+                        <div class="control mb-3">
+                            <label class="radio">
+                                <input type="radio" name="alternativa" value="{{ alternativa.id }}" required>
+                                {{ alternativa.texto }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="button is-primary">Votar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; 2026 Enquete</p>
+        </div>
+    </footer>
+</body>
+</html>
