@@ -12,4 +12,4 @@ def index(request):
             {'id': 4, 'texto': 'Ruby on Rails'},
         ],
     }
-    return render(request, 'index.html', context=contexto)
+    return render(request, 'enquete/index.html', context=contexto)
