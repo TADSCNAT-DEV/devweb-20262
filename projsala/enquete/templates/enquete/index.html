@@ -14,7 +14,7 @@
         <section class="hero is-link">
             <div class="hero-body">
                 <div class="container">
-                    <form id="enquete-form" action="votar/" >
+                    <form id="enquete-form" action="{% url 'enquete:votar' %}" >
                         <h2 class="subtitle is-3">{{ pergunta }}</h2>
                         {% for alternativa in alternativas %}
                         <div class="control mb-3">

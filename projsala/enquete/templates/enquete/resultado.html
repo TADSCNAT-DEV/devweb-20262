@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Enquete</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <style>
+        .ranking-bar {
+            height: 2rem;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #00d1b2, #7a5af8);
+            transition: width 1s ease-in-out;
+        }
+        .ranking-track {
+            background-color: #f0f0f0;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .winner-card {
+            border: 3px solid #ffdd57;
+            box-shadow: 0 0 25px rgba(255, 221, 87, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="title is-1 has-text-centered mt-4">🏆 Resultado da Votação 🏆</h1>
+    </header>
+    <main>
+        <section class="hero is-link is-medium">
+            <div class="hero-body">
+                <div class="container">
+                    {% with ranking=alternativas|dictsortreversed:"votos" %}
+
+                    <!-- Destaque do vencedor -->
+                    <div class="box winner-card has-text-centered mb-6">
+                        <p class="subtitle is-4 mb-1 has-text-dark">🎉 Vencedor(a) 🎉</p>
+                        <p class="title is-2 has-text-warning-dark">{{ ranking.0.texto }}</p>
+                        <p class="subtitle is-5">{{ ranking.0.votos }} voto{{ ranking.0.votos|pluralize }}</p>
+                    </div>
+
+                    <!-- Ranking com barras -->
+                    {% for alternativa in ranking %}
+                    <div class="box mb-4">
+                        <div class="level mb-2">
+                            <div class="level-left">
+                                <span class="title is-4 mr-2">
+                                    {% if forloop.first %}🥇{% elif forloop.counter == 2 %}🥈{% elif forloop.counter == 3 %}🥉{% else %}#{{ forloop.counter }}{% endif %}
+                                </span>
+                                <span class="subtitle is-4">{{ alternativa.texto }}</span>
+                            </div>
+                            <div class="level-right">
+                                <span class="tag is-primary is-large">{{ alternativa.votos }} voto{{ alternativa.votos|pluralize }}</span>
+                            </div>
+                        </div>
+                        <div class="ranking-track">
+                            {% if ranking.0.votos > 0 %}
+                                {% widthratio alternativa.votos ranking.0.votos 100 as percentual %}
+                            {% else %}
+                                {% widthratio 0 1 100 as percentual %}
+                            {% endif %}
+                            <div class="ranking-bar" style="width: {{ percentual }}%;"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% endwith %}
+
+                    <div class="has-text-centered mt-5">
+                        <a href="{% url 'enquete:index' %}" class="button is-warning is-medium">Votar novamente</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; 2026 Enquete</p>
+        </div>
+    </footer>
+</body>
+</html>

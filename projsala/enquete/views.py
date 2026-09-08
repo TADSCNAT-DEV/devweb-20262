@@ -23,7 +23,9 @@ def votar(request):
     alternativa=alternativas[opcao-1]
     alternativa['votos']+=1
 
-    return HttpResponse(alternativas)
+    contexto={'alternativas':alternativas}
+
+    return render(request,'enquete/resultado.html',contexto)
 
 
 

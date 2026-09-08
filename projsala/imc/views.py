@@ -19,7 +19,7 @@ def tabuada2(request):
 def calcular_imc(request):
     altura=float(request.GET.get("altura"))
     peso=float(request.GET.get("peso"))
-    altura=altura/100.0
+    #altura=altura/100.0
     imc=peso/(altura*altura)
     if imc < 18.5:
         classificacao = 'Abaixo do peso'
