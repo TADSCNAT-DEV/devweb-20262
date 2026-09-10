@@ -13,7 +13,8 @@
     <main>
         <section class="hero is-link">
             <div class="hero-body">
-                <form id="imc-form"  action="{% url 'imc:calcular_imc' %}">
+                <form id="imc-form"  action="{% url 'imc:calcular_imc' %}" method="POST">
+                    {% csrf_token %}
                     <label class="label">Altura (m):</label>
                     <div class="control">
                         <input type="number" id="altura" name="altura" step="0.01" class="input" required>

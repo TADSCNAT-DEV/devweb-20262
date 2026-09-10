@@ -17,8 +17,8 @@ def tabuada2(request):
     return HttpResponse(texto)
 
 def calcular_imc(request):
-    altura=float(request.GET.get("altura"))
-    peso=float(request.GET.get("peso"))
+    altura=float(request.POST["altura"])
+    peso=float(request.POST["peso"])
     #altura=altura/100.0
     imc=peso/(altura*altura)
     if imc < 18.5:
