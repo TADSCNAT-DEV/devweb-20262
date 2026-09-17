@@ -1,0 +1,8 @@
+.table {
+    --bulma-table-row-hover-background-color: var(--bulma-primary)
+}
+
+img {
+    display: block;
+    box-sizing: border-box;
+}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from . import services
 # Create your views here.
 
 def index(request):
@@ -19,17 +19,7 @@ def tabuada2(request):
 def calcular_imc(request):
     altura=float(request.POST["altura"])
     peso=float(request.POST["peso"])
-    #altura=altura/100.0
-    imc=peso/(altura*altura)
-    if imc < 18.5:
-        classificacao = 'Abaixo do peso'
-    elif imc < 24.9:
-        classificacao = 'Peso normal'
-    elif imc < 29.9:
-        classificacao = 'Sobrepeso'
-    else:
-        classificacao = 'Obesidade'
-    #resposta=f'O Valor do IMC é {(peso/(altura*altura)):.2f}'
+    imc,classificacao=services.calcular_imc(altura,peso)
     contexto={
         'peso':peso,
         'altura':altura,
