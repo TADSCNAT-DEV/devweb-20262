@@ -2,7 +2,8 @@
     --bulma-table-row-hover-background-color: var(--bulma-primary)
 }
 
-img {
+figure img {
     display: block;
     box-sizing: border-box;
+    position: relative;
 }

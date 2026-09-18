@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 01</title>
+</head>
+<body>
+    <ul id="cursos"></ul>
+    <button id="btn">Clique Aqui</button>
+    <script>
+        const cursos=["Django","Java","C++"];
+        const lista=document.getElementById("cursos");
+        for(let i=0;i<cursos.length;i++){
+            let item=document.createElement("li");
+            item.innerText=cursos[i];
+            lista.appendChild(item);
+        }
+    </script>
+    <script>
+        const cliqueBotao=()=>{
+                alert("Botão Clicado!");
+            };
+        document.getElementById("btn").addEventListener("dblclick",cliqueBotao);
+    </script>
+</body>
+</html>
