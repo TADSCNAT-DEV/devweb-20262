@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado IMC</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    {% load static %}
+    <script src="{% static 'imc/js/script.js' %}" ></script>
 </head>
 <body>
     <section class="section">
@@ -20,6 +22,8 @@
                 <a href="{% url 'imc:index' %}" class="button is-primary">Calcular Novamente</a>
             </div>
         </div>
+        <div id="situacao_imc" data-classificacao="{{ classificacao }}"></div>
     </section>
 </body>
+
 </html>
