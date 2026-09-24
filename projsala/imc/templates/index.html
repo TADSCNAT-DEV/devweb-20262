@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de IMC</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    {% load static%}
+    <script src="{% static 'imc/js/script02.js' %}"></script>
 </head>
 <body>
     <header>
@@ -25,6 +27,9 @@
                     </div>
                     <button type="submit" class="button is-primary">Calcular IMC</button>
                 </form>
+                <div id="requisicao_imc" data-url="{% url 'imc:mensagem'%}"></div>
+                <button class="button is-primary" onclick="carregarMensagem()">Receber Mensagem</button>
+                <p id="mensagem"></p>
             </div>
         </section>
     </main>
