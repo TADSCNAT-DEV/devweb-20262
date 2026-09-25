@@ -17,8 +17,16 @@ def tabuada2(request):
     return HttpResponse(texto)
 
 def mensagem(request):
-    dicionario={'mensagem':'Olá IMC - Dev Web'}
-    return JsonResponse(dicionario)
+
+    if (request.htmx):
+        mensagem='Olá HTMX!!!'
+        contexto={
+            'mensagem':mensagem
+        }
+        return render(request,"mensagem.html",contexto)
+    else:    
+        dicionario={'mensagem':'Olá IMC - Dev Web'}
+        return JsonResponse(dicionario)
 
 def calcular_imc(request):
     altura=float(request.POST["altura"])

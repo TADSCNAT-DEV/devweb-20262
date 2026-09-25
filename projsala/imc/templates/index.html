@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     {% load static%}
     <script src="{% static 'imc/js/script02.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js" integrity="sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -28,8 +29,8 @@
                     <button type="submit" class="button is-primary">Calcular IMC</button>
                 </form>
                 <div id="requisicao_imc" data-url="{% url 'imc:mensagem'%}"></div>
-                <button class="button is-primary" onclick="carregarMensagem()">Receber Mensagem</button>
-                <p id="mensagem"></p>
+                <button class="button is-primary" hx-get="{% url 'imc:mensagem'%}" hx-target="#mensagem" >Receber Mensagem</button>
+                <div id="mensagem"></div>
             </div>
         </section>
     </main>
