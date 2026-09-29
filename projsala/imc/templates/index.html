@@ -16,7 +16,7 @@
     <main>
         <section class="hero is-link">
             <div class="hero-body">
-                <form id="imc-form"  action="{% url 'imc:calcular_imc' %}" method="POST">
+                <form id="imc-form"  action="{% url 'imc:calcular_imc'%}" method="POST">
                     {% csrf_token %}
                     <label class="label">Altura (m):</label>
                     <div class="control">
@@ -32,6 +32,9 @@
                 <button class="button is-primary" hx-get="{% url 'imc:mensagem'%}" hx-target="#mensagem" >Receber Mensagem</button>
                 <div id="mensagem"></div>
             </div>
+        </section>
+        <section class="section" id="resultado">
+
         </section>
     </main>
     <footer class="footer">

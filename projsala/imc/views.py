@@ -38,4 +38,7 @@ def calcular_imc(request):
         'imc':f'{imc:.2f}',
         'classificacao':classificacao,
     }
-    return render(request,'resultado.html',context=contexto)
+    if request.htmx:
+        return render(request,'resultado_partial.html',context=contexto)
+    else:
+        return render(request,'resultado.html',context=contexto)

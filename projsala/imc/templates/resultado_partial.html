@@ -1,0 +1,13 @@
+<div class="container">
+    <h1 class="title has-text-centered">Resultado do Cálculo do IMC</h1>
+    <div class="box">
+        <p><strong>Peso:</strong> {{ peso }} kg</p>
+        <p><strong>Altura:</strong> {{ altura }} m</p>
+        <p><strong>IMC:</strong> {{ imc }}</p>
+        <p><strong>Classificação:</strong> {{ classificacao }}</p>
+    </div>
+    <div class="has-text-centered">
+        <a href="{% url 'imc:index' %}" class="button is-primary">Calcular Novamente</a>
+    </div>
+</div>
+    
