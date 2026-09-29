@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from . import services
+import time
 # Create your views here.
 
 def index(request):
@@ -32,6 +33,7 @@ def calcular_imc(request):
     altura=float(request.POST["altura"])
     peso=float(request.POST["peso"])
     imc,classificacao=services.calcular_imc(altura,peso)
+    time.sleep(2)
     contexto={
         'peso':peso,
         'altura':altura,
@@ -39,6 +41,6 @@ def calcular_imc(request):
         'classificacao':classificacao,
     }
     if request.htmx:
-        return render(request,'resultado_partial.html',context=contexto)
+        return render(request,'partials/resultado_partial.html',context=contexto)
     else:
         return render(request,'resultado.html',context=contexto)
