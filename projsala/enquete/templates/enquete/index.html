@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquete</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-</head>
-<body>
-    <header>
-        <h1 class="title is-1 has-text-centered mt-4">Enquete</h1>
-    </header>
-    <main>
-        <section class="hero is-link">
-            <div class="hero-body">
+{% extends 'principal/base.html' %}
+{% block page_title %}Enquete{% endblock %}
+{% block breadcrumb_items %}
+<li class="is-active"><a href="#" aria-current="page">Enquete</a></li>
+{% endblock %}
+{% block page_subtitle %}Participe da nossa enquete{% endblock %}
+{%load static%}
+{% block content %}
                 <div class="container">
                     <form id="enquete-form" action="{% url 'enquete:votar' %}" >
                         <h2 class="subtitle is-3">{{ pergunta }}</h2>
@@ -27,13 +20,4 @@
                         <button type="submit" class="button is-primary">Votar</button>
                     </form>
                 </div>
-            </div>
-        </section>
-    </main>
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>&copy; 2026 Enquete</p>
-        </div>
-    </footer>
-</body>
-</html>
+{%endblock%}

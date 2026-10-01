@@ -1,0 +1,101 @@
+<!-- Sidebar - Barra de Navegação Lateral -->
+<aside class="menu box">
+    <p class="menu-label has-text-primary">
+        <i class="fas fa-bars"></i> Menu Principal
+    </p>
+    <ul class="menu-list">
+        <li>
+            <a href="/" class="{% if request.path == '/' %}is-active{% endif %}">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span>Página Inicial</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+
+    <p class="menu-label has-text-primary">
+        <i class="fas fa-apps"></i> Aplicações
+    </p>
+    <ul class="menu-list">
+        <li>
+            <a href="{% url 'enquete:index' %}" class="{% if '/enquete/' in request.path %}is-active{% endif %}">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-poll"></i>
+                    </span>
+                    <span>Enquete</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'imc:index' %}" class="{% if '/imc/' in request.path %}is-active{% endif %}">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-calculator"></i>
+                    </span>
+                    <span>Calculadora IMC</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'listahtmx:index' %}" class="{% if '/listahtmx/' in request.path %}is-active{% endif %}">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-list"></i>
+                    </span>
+                    <span>Lista HTMX</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+
+    <p class="menu-label has-text-primary">
+        <i class="fas fa-info-circle"></i> Informações
+    </p>
+    <ul class="menu-list">
+        <li>
+            <a>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-book"></i>
+                    </span>
+                    <span>Documentação</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                    <span>Ajuda</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <span>Contato</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="box has-background-info-light mt-4">
+        <p class="has-text-centered">
+            <span class="icon">
+                <i class="fas fa-lightbulb"></i>
+            </span>
+        </p>
+        <p class="is-size-7 has-text-centered">
+            <strong>Dica:</strong> Use o menu lateral para navegar entre as aplicações do projeto.
+        </p>
+    </div>
+</aside>

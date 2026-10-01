@@ -1,0 +1,30 @@
+{% extends 'principal/base.html' %}
+{% block page_title %}Calculadora de IMC{% endblock %}
+{% block breadcrumb_items %}
+<li class="is-active"><a href="#" aria-current="page">IMC</a></li>
+{% endblock %}
+{% block page_subtitle %}Calcule seu Índice de Massa Corporal{% endblock %}
+{% block content %}
+ {% include 'principal/partials/spinner.html' with message="Processando dados..." size="4.5rem" %}
+            <div class="container">
+                <form id="imc-form"  hx-post="{% url 'imc:calcular_imc' %}" hx-target="#resultado" hx-indicator="#spinner" method="POST">
+                    {% csrf_token %}
+                    <label class="label">Altura (m):</label>
+                    <div class="control">
+                        <input type="number" id="altura" name="altura" step="0.01" class="input" required>
+                    </div>
+                    <label class="label">Peso (kg):</label>
+                    <div class="control">
+                        <input type="number" id="peso" name="peso" step="0.1" class="input" required>
+                    </div>
+                    <button type="submit" class="button is-primary">Calcular IMC</button>
+                </form>
+                <div id="requisicao_imc" data-url="{% url 'imc:mensagem'%}"></div>
+                <button class="button is-primary" hx-get="{% url 'imc:mensagem'%}" hx-target="#mensagem" >Receber Mensagem</button>
+                <div id="mensagem"></div>
+                <section class="section" id="resultado">
+
+             </section>
+            </div>
+        
+{%endblock%}

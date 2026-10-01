@@ -1,0 +1,26 @@
+{% extends 'principal/base.html' %}
+{% block page_title %}Lista HTMX{% endblock %}
+{% block breadcrumb_items %}
+<li class="is-active"><a href="#" aria-current="page">Lista HTMX</a></li>
+{% endblock %}
+{% block page_subtitle %}Lista de Alunos{% endblock %}
+{% block content %}
+        <div class="container">
+            <h1 class="title">Busca de Alunos</h1>
+            <form method="get" action="">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input class="input" type="text" name="q" value="{{ q }}" placeholder="Buscar por nome ou curso..." hx-get="{% url 'listahtmx:buscar' %}" hx-target="#resultado" hx-swap="innerHTML" hx-trigger="keyup changed delay:300ms">
+                    </div>
+                    <div class="control">
+                        <button type="submit" class="button is-link">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            <div id="resultado">
+                {% if not request.htmx %}
+                    {% include 'listahtmx/lista.html' %}
+                {% endif %}
+            </div>
+        </div>
+   {%endblock%}

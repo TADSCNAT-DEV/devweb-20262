@@ -1,27 +1,24 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado da Enquete</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-    {% load static %}
+{% extends 'principal/base.html' %}
+{% block page_title %}Resultado da Enquete{% endblock %}
+{% block breadcrumb_items %}
+<li class="is-active"><a href="#" aria-current="page">Enquete</a></li>
+{% endblock %}
+{% block page_subtitle %}Resultado da Enquete{% endblock %}
+{%load static%}
+{% block content %}
+    <div class="columns is-centered">
+    <div class="column is-8-desktop is-10-tablet">
 
-    <link rel="stylesheet" href="{% static 'enquete/css/style.css'%}">
-    
-</head>
-<body>
-    <header class="level">
+         <div class="level">
         <h1 class="title level-item is-1 has-text-centered mt-4">🏆 Resultado da Votação 🏆</h1>
         <div class="level-item">
             <figure class="image is-32x32">
                 <img class="is-rounded" src="{% static 'enquete/imgs/bulmadragonball.jpg' %}" />
             </figure>
         </div>
-    </header>
-    <main>
-        <section class="hero is-link is-medium">
-            <table class="table is-hoverable">
+    </div>
+        <section class="box">
+            <table class="table is-fullwidth is-hoverable">
                 <thead>
                     <tr>
                         <th>Alternativa</th>
@@ -36,11 +33,8 @@
                 {% endfor %}
             </table>
         </section>
-    </main>
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>&copy; 2026 Enquete</p>
-        </div>
-    </footer>
-</body>
-</html>
+    </div>
+
+    </div>
+   
+   {%endblock%}

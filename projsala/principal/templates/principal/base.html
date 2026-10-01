@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>{% block title %}ProjSala - DevWeb 2026.1{% endblock %}</title>
+    
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous"></script>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'principal/css/principal.css' %}">
+
+    {% block extra_css %}
+    <!-- Estilos adicionais das páginas filhas -->
+    {% endblock %}
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Inclusão do Header -->
+        {% include 'principal/header.html' with semestre='2026.2' %}
+        
+        <!-- Conteúdo Principal com Sidebar -->
+        <section class="section">
+            <div class="container is-fluid">
+                <div class="columns">
+                    <!-- Sidebar (Barra Lateral) -->
+                    <div class="column is-3 sidebar-column">
+                        {% include 'principal/sidebar.html' %}
+                    </div>
+                    
+                    <!-- Área de Conteúdo Principal -->
+                    <div class="column is-9 content-column">
+                        <div class="content-area">
+                            <!-- Breadcrumb (navegação) -->
+                            {% block breadcrumb %}
+                            <nav class="breadcrumb" aria-label="breadcrumbs">
+                                <ul>
+                                    <li><a href="{% url 'principal:index' %}">Início</a></li>
+                                    {% block breadcrumb_items %}
+                                    {% endblock %}
+                                </ul>
+                            </nav>
+                            {% endblock %}
+                            
+                         
+                            
+                            <!-- Título da Página -->
+                            {% block page_header %}
+                            <div class="block">
+                                <h1 class="title is-2">
+                                    {% block page_title %}Bem-vindo ao Projeto de Sala de Aula{% endblock %}
+                                </h1>
+                                {% block page_subtitle %}
+                                <p class="subtitle is-5">Template Base</p>
+                                {% endblock %}
+                            </div>
+                            {% endblock %}
+                            
+                            <!-- Conteúdo Principal -->
+                            <div class="main-content">
+                                {% block content %}
+                                
+                                {% endblock %}
+                            </div>
+                            
+                            <!-- Área adicional (opcional) -->
+                            {% block extra_content %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Inclusão do Footer -->
+    {% include 'principal/footer.html' with semestre='2026.1' %}
+    
+    <!-- Scripts JavaScript -->
+    <script src="{% static 'principal/js/scripts.js' %}"></script>
+    
+    {% block extra_js %}
+    <!-- Scripts adicionais das páginas filhas, se necessários -->
+    {% endblock %}
+</body>
+</html>

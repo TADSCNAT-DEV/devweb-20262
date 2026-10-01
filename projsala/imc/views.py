@@ -5,7 +5,7 @@ import time
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    return render(request,'imc/index.html')
 def heloisa(request):
     return HttpResponse("<h1>Olá Heloisa</h1>")
 def tabuada2(request):
@@ -24,7 +24,7 @@ def mensagem(request):
         contexto={
             'mensagem':mensagem
         }
-        return render(request,"mensagem.html",contexto)
+        return render(request,"imc/mensagem.html",contexto)
     else:    
         dicionario={'mensagem':'Olá IMC - Dev Web'}
         return JsonResponse(dicionario)
@@ -41,6 +41,6 @@ def calcular_imc(request):
         'classificacao':classificacao,
     }
     if request.htmx:
-        return render(request,'partials/resultado_partial.html',context=contexto)
+        return render(request,'imc/partials/resultado_partial.html',context=contexto)
     else:
-        return render(request,'resultado.html',context=contexto)
+        return render(request,'imc/resultado.html',context=contexto)

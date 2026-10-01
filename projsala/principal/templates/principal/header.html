@@ -1,0 +1,75 @@
+<!-- Header do Projeto -->
+<header class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                <i class="fas fa-graduation-cap"></i> DevWeb 2026.2
+            </h1>
+            <h2 class="subtitle">
+                Aplicações criadas em Sala de Aula - Semestre 2026.2
+            </h2>
+        </div>
+    </div>
+</header>
+
+<!-- Navbar -->
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{% url 'principal:index' %}">
+            <strong>Projetos de Sala</strong>
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasic" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{% url 'principal:index' %}">
+                <span class="icon">
+                    <i class="fas fa-home"></i>
+                </span>
+                <span>Início</span>
+            </a>
+
+            <a class="navbar-item" href="{% url 'enquete:index' %}">
+                <span class="icon">
+                    <i class="fas fa-poll"></i>
+                </span>
+                <span>Enquete</span>
+            </a>
+
+            <a class="navbar-item" href="{% url 'imc:index' %}">
+                <span class="icon">
+                    <i class="fas fa-calculator"></i>
+                </span>
+                <span>Calculadora IMC</span>
+            </a>
+
+            <a class="navbar-item" href="{% url 'listahtmx:index' %}">
+                <span class="icon">
+                    <i class="fas fa-list"></i>
+                </span>
+                <span>Lista HTMX</span>
+            </a>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-primary is-light">
+                        <span class="icon">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <span>Perfil</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+{% load static %}
+<script src="{% static 'principal/js/scripts.js' %}"></script>

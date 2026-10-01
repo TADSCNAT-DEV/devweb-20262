@@ -1,0 +1,141 @@
+  html, body {
+            height: 100%;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-wrapper {
+            flex: 1 0 auto;
+        }
+        
+        footer {
+            flex-shrink: 0;
+        }
+        
+        .content-area {
+            min-height: 400px;
+        }
+        
+        /* Animação suave para links */
+        a {
+            transition: all 0.3s ease;
+        }
+        
+        /* Espaçamento do conteúdo principal */
+        .main-content {
+            padding: 2rem 1rem;
+        }
+        
+        /* Responsividade para sidebar */
+        @media screen and (max-width: 768px) {
+            .sidebar-column {
+                order: 2;
+                margin-top: 1rem;
+            }
+            .content-column {
+                order: 1;
+            }
+        }
+
+         /* Efeito hover nos cards */
+    .hover-card {
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .application-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .application-card .card-image .image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .application-card .card-content {
+        flex-grow: 1;
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hover-card .card-footer-item:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Animação suave para as mensagens */
+    .message {
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .message:hover {
+        transform: scale(1.02);
+    }
+    
+    /* Efeito nos boxes de estatísticas */
+    .box {
+        transition: all 0.3s ease;
+    }
+    
+    .box:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Tags com espaçamento */
+    .tags .tag {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+     .table-container {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .table thead tr {
+    background-color: #3273dc;
+    color: white;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f5f5f5;
+    transition: background-color 0.2s ease;
+  }
+
+  .table td {
+    vertical-align: middle;
+    padding: 1rem;
+  }
+
+  .tag {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+  }
+
+  .htmx-indicator {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+/* HTMX adiciona essa classe quando a requisição está em andamento */
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

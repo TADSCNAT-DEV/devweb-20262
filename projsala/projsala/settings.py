@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django_htmx",
     "imc",
     "enquete",
+    "listahtmx",
+    "principal",
 ]
 
 MIDDLEWARE = [

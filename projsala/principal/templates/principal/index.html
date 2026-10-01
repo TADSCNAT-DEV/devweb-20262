@@ -1,0 +1,173 @@
+{% extends 'principal/base.html' %}
+
+{% block title %}Página Inicial - Projetos de Sala DevWeb 2026.2{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="is-active"><a href="#" aria-current="page">Página Inicial</a></li>
+{% endblock %}
+
+{% block page_title %}
+<i class="fas fa-home"></i> Bem-vindo ao ProjSala
+{% endblock %}
+
+{% block page_subtitle %}
+<p class="subtitle is-5">Projeto de Sala de Aula- Semestre 2026.2</p>
+{% endblock %}
+
+{% block content %}
+<!-- Seção de Boas-vindas -->
+<div class="notification is-primary is-light mb-5">
+    <h2 class="title is-4">
+        <i class="fas fa-graduation-cap"></i> Bem-vindo ao Projeto de Sala de Aula!
+    </h2>
+    <p class="is-size-5">
+        Este projeto demonstra o uso de <strong>templates Django</strong> com <strong>herança</strong> e 
+        <strong>inclusão</strong>, utilizando o framework CSS <strong>Bulma</strong> para criar interfaces 
+        modernas e responsivas.
+    </p>
+</div>
+
+<!-- Cards das Aplicações -->
+<div class="columns is-multiline mb-5">
+    <!-- Card Enquete -->
+    <div class="column is-4-desktop is-6-tablet is-12-mobile">
+        <div class="card hover-card application-card">
+            <div class="card-image">
+                <figure class="image is-16by9 has-background-primary">
+                    <div class="has-text-centered">
+                        <span class="icon is-large has-text-white">
+                            <i class="fas fa-poll fa-3x"></i>
+                        </span>
+                    </div>
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">
+                            <i class="fas fa-poll"></i> Sistema de Enquete
+                        </p>
+                        <p class="subtitle is-6 has-text-grey">Votação de Enquetes</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <p>
+                        Participe das enquetes e veja os resultados.
+                    </p>
+                    <div class="tags mt-3">
+                        <span class="tag is-primary is-light">
+                            <i class="fas fa-vote-yea mr-1"></i> Votação
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="{% url 'enquete:index' %}" class="card-footer-item has-text-primary has-text-weight-semibold">
+                    <span class="icon">
+                        <i class="fas fa-vote-yea"></i>
+                    </span>
+                    <span>Votar Agora</span>
+                </a>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Card Calculadora IMC -->
+    <div class="column is-4-desktop is-6-tablet is-12-mobile">
+        <div class="card hover-card application-card">
+            <div class="card-image">
+                <figure class="image is-16by9 has-background-info">
+                    <div class="has-text-centered">
+                        <span class="icon is-large has-text-white">
+                            <i class="fas fa-calculator fa-3x"></i>
+                        </span>
+                    </div>
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">
+                            <i class="fas fa-calculator"></i> Calculadora IMC
+                        </p>
+                        <p class="subtitle is-6 has-text-grey">Índice de Massa Corporal</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <p>
+                        Calcule seu IMC e descubra sua classificação de acordo com os padrões 
+                        da Organização Mundial da Saúde (OMS).
+                    </p>
+                    <div class="tags mt-3">
+                        <span class="tag is-info is-light">
+                            <i class="fas fa-calculator mr-1"></i> Cálculo
+                        </span>
+                        <span class="tag is-success is-light">
+                            <i class="fas fa-heartbeat mr-1"></i> Saúde
+                        </span>
+                        <span class="tag is-warning is-light">
+                            <i class="fas fa-chart-line mr-1"></i> Classificação
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="{% url 'imc:index' %}" class="card-footer-item has-text-primary has-text-weight-semibold">
+                    <span class="icon">
+                        <i class="fas fa-calculator"></i>
+                    </span>
+                    <span>Calcular IMC</span>
+                </a>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Card Lista HTMX -->
+    <div class="column is-4-desktop is-6-tablet is-12-mobile">
+        <div class="card hover-card application-card">
+            <div class="card-image">
+                <figure class="image is-16by9 has-background-success">
+                    <div class="has-text-centered">
+                        <span class="icon is-large has-text-white">
+                            <i class="fas fa-list fa-3x"></i>
+                        </span>
+                    </div>
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">
+                            <i class="fas fa-list"></i> Lista HTMX
+                        </p>
+                        <p class="subtitle is-6 has-text-grey">Busca Dinâmica</p>
+                    </div>
+                </div>
+                <div class="content">
+                    <p>
+                        Pesquise itens em tempo real usando HTMX.
+                    </p>
+                    <div class="tags mt-3">
+                        <span class="tag is-success is-light">
+                            <i class="fas fa-bolt mr-1"></i> HTMX
+                        </span>
+                        <span class="tag is-link is-light">
+                            <i class="fas fa-search mr-1"></i> Busca
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="{% url 'listahtmx:index' %}" class="card-footer-item has-text-primary has-text-weight-semibold">
+                    <span class="icon">
+                        <i class="fas fa-list"></i>
+                    </span>
+                    <span>Abrir Lista</span>
+                </a>
+            </footer>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
