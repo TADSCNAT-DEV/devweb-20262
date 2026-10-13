@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Animais</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Tipos de Animais</h1>
+
+            <form method="get" class="field has-addons mb-5">
+                <div class="control has-icons-left is-expanded">
+                    <input class="input" type="text" name="nome" value="{{ busca }}" placeholder="Buscar pelo nome do tipo">
+                    <span class="icon is-left"><i class="fas fa-search"></i></span>
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-primary">Buscar</button>
+                </div>
+                {% if busca %}
+                <div class="control">
+                    <a href="{% url 'animais:listatipoanimal' %}" class="button">Limpar</a>
+                </div>
+                {% endif %}
+            </form>
+
+            <table class="table is-fullwidth is-striped is-hoverable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th class="has-text-centered">Raças</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tipo in tipos %}
+                    <tr>
+                        <td>{{ tipo.id }}</td>
+                        <td>{{ tipo.nome }}</td>
+                        <td class="has-text-centered">
+                            <a href="{% url 'animais:listaracas' tipo.id %}" title="Listar raças de {{ tipo.nome }}">
+                                <span class="icon has-text-info"><i class="fas fa-paw"></i></span>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="has-text-centered">Nenhum tipo de animal encontrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>
