@@ -3,26 +3,27 @@ from django.db import models
 # Create your models here.
 
 class TipoAnimal(models.Model):
-    nome = models.CharField(max_length=100,unique=True)
+    nome = models.CharField(verbose_name="Nome",max_length=100,unique=True)
 
     def __str__(self):
         return self.nome
 
 class Raca(models.Model):
-    nome = models.CharField(max_length=100)
-    tipo_animal = models.ForeignKey(TipoAnimal,on_delete=models.PROTECT,related_name='racas')
+    nome = models.CharField(verbose_name="Nome",max_length=100)
+    tipo_animal = models.ForeignKey(TipoAnimal,verbose_name="Tipo do Animal",on_delete=models.PROTECT,related_name='racas')
 
     def __str__(self):
         return f"{self.tipo_animal.nome}-{self.nome}"
     
 class Animal(models.Model):
-    nome = models.CharField(max_length=255)
-    sexo = models.CharField(max_length=1,choices=[('M','Masculino'),('F','Feminino')])
-    cor = models.CharField(max_length=50)
-    raca = models.ForeignKey(Raca, on_delete=models.CASCADE,related_name='animais')
-    descricao = models.TextField(blank=True,null=True)
-    disponivel = models.BooleanField(default=True,null=True)
-    dataNascimento=models.DateField()
+    nome = models.CharField(verbose_name="Nome",max_length=255)
+    sexo = models.CharField(verbose_name="Sexo",max_length=1,choices=[('M','Masculino'),('F','Feminino')])
+    cor = models.CharField(verbose_name="Cor",max_length=50)
+    raca = models.ForeignKey(Raca,verbose_name="Raça", on_delete=models.CASCADE,related_name='animais')
+    descricao = models.TextField(verbose_name="Descrição", blank=True,null=True)
+    disponivel = models.BooleanField(verbose_name="Disponível",default=True,null=True)
+    dataNascimento=models.DateField(verbose_name="Data de Nascimento",help_text='Data não deve ser no futuro')
+    foto=models.ImageField(upload_to="animais/fotos/",verbose_name="Foto do Animal",null=True)
 
     def __str__(self):
         return self.nome
