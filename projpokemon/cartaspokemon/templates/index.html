@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cartas Pokémon - Raridades</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Raridades</h1>
+            <p class="subtitle">Escolha uma raridade para ver as cartas</p>
+
+            <table class="table is-fullwidth is-striped is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Raridade</th>
+                        <th>Descrição</th>
+                        <th>Cartas</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for raridade in raridades %}
+                    <tr>
+                        <td>{{ raridade.nome }}</td>
+                        <td>{{ raridade.descricao }}</td>
+                        <td>{{ raridade.pokemons.count }}</td>
+                        <td>
+                            <a class="button is-link is-small" href="{% url 'cartaspokemon:lista_carta_raridade' raridade.id %}">Ver cartas</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="has-text-centered">Nenhuma raridade com cartas cadastradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>

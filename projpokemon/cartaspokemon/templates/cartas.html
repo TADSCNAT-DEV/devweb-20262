@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cartas Pokémon</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Cartas</h1>
+
+            <form method="get" class="field has-addons">
+                <div class="control is-expanded">
+                    <input class="input" type="text" name="nome" placeholder="Buscar por nome" value="{{ busca|default:'' }}">
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-info">Buscar</button>
+                </div>
+            </form>
+
+            <div class="columns is-multiline">
+                {% for carta in cartas %}
+                <div class="column is-4">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="{{ carta.imagem.url }}" alt="{{ carta.nome }}" style="object-fit: contain;">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <p class="title is-4">{{ carta.nome }}</p>
+                            <p class="subtitle is-6">{{ carta.tipo.nome }}</p>
+                            <div class="content">
+                                <p><strong>Estágio:</strong> {{ carta.get_estagioEvolucao_display }}</p>
+                                <p><strong>Pontos de Vida:</strong> {{ carta.pontoVida }}</p>
+                                <p><strong>Valor Estimado:</strong> R$ {{ carta.valorEstimado }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="column">
+                    <p class="has-text-centered">Nenhuma carta encontrada.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <a class="button" href="{% url 'cartaspokemon:index' %}">Voltar</a>
+        </div>
+    </section>
+</body>
+</html>
