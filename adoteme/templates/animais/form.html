@@ -53,8 +53,8 @@
 						<input
 							class="input"
 							type="date"
-							name="data_nascimento"
-							value="{{ animal.data_nascimento|date:'Y-m-d'|default:'' }}"
+							name="dataNascimento"
+							value="{{ animal.dataNascimento|date:'Y-m-d'|default:'' }}"
 							required
 						>
 					</div>
@@ -117,7 +117,7 @@
 						<textarea
 							class="textarea"
 							name="descricao"
-							placeholder="Informacoes gerais sobre o animal"
+							placeholder="Informações gerais sobre o animal"
 							rows="4"
 						>{{ animal.descricao|default:'' }}</textarea>
 					</div>
@@ -139,7 +139,7 @@
 
 			<div class="column is-12-tablet is-5-desktop">
 				<div class="foto-preview-card mb-4">
-					<p class="has-text-weight-semibold mb-2">Pre-visualizacao</p>
+					<p class="has-text-weight-semibold mb-2">Pre-visualização</p>
 					<div class="foto-preview-box">
 						<img
 							id="foto-preview"
@@ -158,7 +158,7 @@
 				<div class="field">
 					<label class="checkbox">
 						<input type="checkbox" name="disponivel" {% if animal.disponivel or not animal %}checked{% endif %}>
-						Animal disponivel para adocao
+						Animal disponivel para adoção
 					</label>
 				</div>
 			</div>
@@ -169,7 +169,7 @@
 		<a href="{% url 'animais:listar_animais' %}" class="button is-light">Cancelar</a>
 		<button class="button is-success" type="submit">
 			<span class="icon"><i class="fas fa-floppy-disk"></i></span>
-			<span>{% if animal %}Salvar Alteracoes{% else %}Cadastrar Animal{% endif %}</span>
+			<span>{% if animal %}Salvar Alterações{% else %}Cadastrar Animal{% endif %}</span>
 		</button>
 	</div>
 </form>

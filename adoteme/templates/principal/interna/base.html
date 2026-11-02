@@ -7,15 +7,15 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" integrity="" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 	{% block extra_head %}{% endblock %}
 </head>
 <body>
 	<div class="columns is-gapless layout-wrapper">
-		<aside class="column is-12-mobile is-3-desktop is-2-widescreen app-sidebar" aria-label="Menu lateral principal">
+		<aside class="column is-12-mobile is-3-desktop is-2-widescreen app-sidebar">
 			<div class="app-brand">
 				<h1 class="title is-4 mb-1">
 					<span class="icon mr-2"><i class="fas fa-paw"></i></span>
@@ -24,8 +24,8 @@
 				<p class="subtitle is-6">Painel Administrativo</p>
 			</div>
 
-				<aside class="menu" aria-label="Navegação do painel">
-				<p class="menu-label has-text-grey-lighter">Navegação</p>
+			<aside class="menu">
+				<p class="menu-label has-text-grey-lighter">Navegacao</p>
 				<ul class="menu-list">
                     <li>
 						<a href="{% url 'principal:index_logado' %}" class="is-active">
@@ -36,7 +36,7 @@
 						</a>
 					</li>
                     <li>
-						<a href="{% url 'animais:listar_tipos' %}" class="is-active">
+						<a href="{% url 'animais:listar_tipos_animais' %}" class="is-active">
 							<span class="icon-text">
 								<span class="icon"><i class="fas fa-tags"></i></span>
 								<span>Tipos de Animais</span>
@@ -44,7 +44,7 @@
 						</a>
 					</li>
                     <li>
-						<a href="{% url 'animais:listar_racas' %}" class="is-active">
+						<a href="#">
 							<span class="icon-text">
 								<span class="icon"><i class="fas fa-hippo"></i></span>
 								<span>Raças</span>
@@ -60,19 +60,19 @@
 						</a>
 					</li>
 					
+					<li>
+						<a href="#">
+							<span class="icon-text">
+								<span class="icon"><i class="fas fa-users"></i></span>
+								<span>Adotantes</span>
+							</span>
+						</a>
+					</li>
                     <li>
 						<a href="#">
 							<span class="icon-text">
 								<span class="icon"><i class="fas fa-book"></i></span>
 								<span>Pedidos de Adoção</span>
-							</span>
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'principal:logout' %}" class="is-active">
-							<span class="icon-text">
-								<span class="icon"><i class="fas fa-right-from-bracket"></i></span>
-								<span>Sair</span>
 							</span>
 						</a>
 					</li>
@@ -88,48 +88,14 @@
 						<h2 class="title is-5 mb-0">{% block page_title %}Gestao de Animais{% endblock %}</h2>
 					</div>
 					<div class="is-flex is-align-items-center">
-						<span class="tag is-info is-light is-large mr-3 has-text-weight-semibold">
-							<figure class="image is-48x48 is-inline-block mr-2">
-								{% if USUARIO and USUARIO.perfil.avatar %}
-									<img class="is-rounded" src="{{ USUARIO.perfil.avatar.url }}" alt="Avatar de {{ USUARIO.nome }}">
-								{% else %}
-									<img class="is-rounded " src="https://via.placeholder.com/256x256?text=Avatar" alt="Avatar padrão">
-								{% endif %}
-							</figure>
-							{% if user.is_authenticated %}
-								<a href="{% url 'usuarios:editar_perfil' %}">{{ user.username }}</a>
-							{% else %}
-								<span>Usuario não autenticado</span>
-							{% endif %}
+						<span class="tag is-info is-light is-medium">
+							<span class="icon"><i class="fas fa-user"></i></span>
+							<span>Usuario autenticado</span>
 						</span>
 					</div>
 				</div>
 			</header>
-			{% if messages %}
-    {% for message in messages %}
-        {% if 'success' in message.tags %}
-        <div id="success-modal" class="modal is-active">
-			<button class="modal-background" type="button" aria-label="Fechar mensagem de sucesso" onclick="closeSuccessModal()"></button>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Operação Realizada</p>
-                    <button class="delete" aria-label="close" type="button" onclick="closeSuccessModal()"></button>
-                </header>
-                <section class="modal-card-body">
-                    <article class="message is-success is-light mb-0">
-                        <div class="message-body">
-                            {{ message }}
-                        </div>
-                    </article>
-                </section>
-                <footer class="modal-card-foot is-justify-content-flex-end">
-                    <button class="button is-success" type="button" onclick="closeSuccessModal()">OK</button>
-                </footer>
-            </div>
-        </div>
-        {% endif %}
-    {% endfor %}
-{% endif %}
+
 			<main class="main-content">
 				<div class="content-card p-5">
 					{% block content %}{% endblock %}
@@ -138,19 +104,11 @@
 
 			<footer class="main-footer">
 				<p>
-					Adote-me © {% now "Y" %} · Plataforma de apoio a adoção responsável.
+					Adote-me © {% now "Y" %} · Plataforma de apoio a adocao responsavel.
 				</p>
 			</footer>
 		</div>
 	</div>
-	<script>
-		 function closeSuccessModal() {
-				const modal = document.getElementById('success-modal');
-				if (modal) {
-					modal.classList.remove('is-active');
-				}
-    	}
-	</script>
 	{% block extra_scripts %}{% endblock %}
 </body>
 </html>
