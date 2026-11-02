@@ -1,0 +1,146 @@
+{% extends 'principal/interna/base.html' %}
+
+{% block title %}Animais - Adote-me{% endblock %}
+{% block page_title %}Listagem de Animais{% endblock %}
+
+{% block content %}
+<div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+    <div>
+        <h1 class="title is-4 mb-1">Animais para adocao</h1>
+        <p class="subtitle is-6 mb-0">Gestão de animais cadastrados</p>
+    </div>
+    <a href="{% url 'animais:cadastrar_animal' %}" class="button is-success">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        <span>Novo Animal</span>
+    </a>
+</div>
+
+<div class="box mb-5">
+    <form method="GET" action="">
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input
+                    class="input"
+                    type="text"
+                    name="busca"
+                    placeholder="Buscar animal por nome..."
+                    value="{{ busca|default:'' }}"
+                >
+            </div>
+            <div class="control">
+                <button class="button is-info" type="submit">
+                    <span class="icon"><i class="fas fa-search"></i></span>
+                    <span>Buscar</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% if animais %}
+    <div class="table-container">
+        <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Raca</th>
+                    <th>Sexo</th>
+                    <th>Cor</th>
+                    <th>Idade</th>
+                    <th class="has-text-centered">Status</th>
+                    <th class="has-text-centered">Acoes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for animal in animais %}
+                <tr>
+                    <td>{{ animal.id }}</td>
+                    <td>
+                        <strong>{{ animal.nome }}</strong>
+                    </td>
+                    <td>{{ animal.raca.nome }}</td>
+                    <td>{{ animal.get_sexo_display }}</td>
+                    <td>{{ animal.cor }}</td>
+                    <td>{{ animal.idade }} ano(s)</td>
+                    <td class="has-text-centered">
+                        {% if animal.disponivel %}
+                            <span class="tag is-success is-light">Disponivel</span>
+                        {% else %}
+                            <span class="tag is-danger is-light">Indisponivel</span>
+                        {% endif %}
+                    </td>
+                    <td class="has-text-centered">
+                        <div class="buttons are-small is-centered">
+                            <a href="{% url 'animais:atualizar_animal' animal.id %}" class="button is-warning is-light">
+                                <span class="icon"><i class="fas fa-edit"></i></span>
+                                <span>Editar</span>
+                            </a>
+                            <button class="button is-danger is-light" type="button" onclick="openDeleteModal('{{ animal.id }}')">
+                                <span class="icon"><i class="fas fa-trash"></i></span>
+                                <span>Excluir</span>
+                            </button>
+                        </div>
+
+                        <div id="delete-modal-{{ animal.id }}" class="modal">
+                            <div class="modal-background" onclick="closeDeleteModal('{{ animal.id }}')"></div>
+                            <div class="modal-card">
+                                <header class="modal-card-head">
+                                    <p class="modal-card-title">Confirmar exclusao</p>
+                                    <button class="delete" aria-label="close" type="button" onclick="closeDeleteModal('{{ animal.id }}')"></button>
+                                </header>
+                                <section class="modal-card-body">
+                                    <p>
+                                        Deseja realmente excluir o animal
+                                        <strong>{{ animal.nome }}</strong>?
+                                    </p>
+                                    <p class="mt-2 has-text-grey-dark">Essa ação não podera ser desfeita.</p>
+                                </section>
+                                <footer class="modal-card-foot is-justify-content-flex-end">
+                                    <button class="button" type="button" onclick="closeDeleteModal('{{ animal.id }}')">Cancelar</button>
+                                    <form method="POST" action="{% url 'animais:excluir_animal' animal.id %}">
+                                        {% csrf_token %}
+                                        <button class="button is-danger" type="submit">Excluir</button>
+                                    </form>
+                                </footer>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="notification is-info is-light mt-4 mb-0">
+        <p class="has-text-centered">
+            <strong>Total de animais listados:</strong> {{ animais|length }}
+        </p>
+    </div>
+{% else %}
+    <article class="message is-warning">
+        <div class="message-body has-text-centered">
+            <span class="icon mr-1"><i class="fas fa-exclamation-triangle"></i></span>
+            Nenhum animal encontrado para a busca informada.
+        </div>
+    </article>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function openDeleteModal(animalId) {
+        const modal = document.getElementById(`delete-modal-${animalId}`);
+        if (modal) {
+            modal.classList.add('is-active');
+        }
+    }
+
+    function closeDeleteModal(animalId) {
+        const modal = document.getElementById(`delete-modal-${animalId}`);
+        if (modal) {
+            modal.classList.remove('is-active');
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends 'principal/interna/base.html' %}
+
+{% block title %}{% if animal %}Editar Animal{% else %}Cadastrar Animal{% endif %} - Adote-me{% endblock %}
+{% block page_title %}{% if animal %}Editar Animal{% else %}Cadastrar Animal{% endif %}{% endblock %}
+
+{% block extra_head %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+	<div>
+		<h1 class="title is-4 mb-1">{% if animal %}Editar cadastro{% else %}Novo cadastro{% endif %}</h1>
+		<p class="subtitle is-6 mb-0">Preencha os dados do animal para manter a base atualizada.</p>
+	</div>
+	<a href="{% url 'animais:listar_animais' %}" class="button is-light">
+		<span class="icon"><i class="fas fa-arrow-left"></i></span>
+		<span>Voltar</span>
+	</a>
+</div>
+
+<form
+	method="POST"
+	enctype="multipart/form-data"
+	action="{% if animal %}{% url 'animais:atualizar_animal' animal.id %}{% else %}{% url 'animais:cadastrar_animal' %}{% endif %}"
+>
+	{% csrf_token %}
+
+	<div class="box">
+		<div class="columns is-multiline">
+			<div class="column is-12-tablet is-8-desktop">
+				<div class="field">
+					<label class="label">Nome</label>
+					<div class="control">
+						<input
+							class="input"
+							type="text"
+							name="nome"
+							placeholder="Nome do animal"
+							value="{{ animal.nome|default:'' }}"
+							required
+						>
+					</div>
+				</div>
+			</div>
+
+			<div class="column is-12-tablet is-4-desktop">
+				<div class="field">
+					<label class="label">Data de nascimento</label>
+					<div class="control">
+						<input
+							class="input"
+							type="date"
+							name="data_nascimento"
+							value="{{ animal.data_nascimento|date:'Y-m-d'|default:'' }}"
+							required
+						>
+					</div>
+				</div>
+			</div>
+
+			<div class="column is-12-tablet is-4-desktop">
+				<div class="field">
+					<label class="label">Sexo</label>
+					<div class="control">
+						<div class="select is-fullwidth">
+							<select name="sexo" required>
+								<option value="">Selecione</option>
+								<option value="M" {% if animal.sexo == 'M' %}selected{% endif %}>Masculino</option>
+								<option value="F" {% if animal.sexo == 'F' %}selected{% endif %}>Feminino</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="column is-12-tablet is-4-desktop">
+				<div class="field">
+					<label class="label">Cor</label>
+					<div class="control">
+						<input
+							class="input"
+							type="text"
+							name="cor"
+							placeholder="Ex: Caramelo"
+							value="{{ animal.cor|default:'' }}"
+							required
+						>
+					</div>
+				</div>
+			</div>
+
+			<div class="column is-12-tablet is-4-desktop">
+				<div class="field">
+					<label class="label">Raca</label>
+					<div class="control">
+						<div class="select is-fullwidth">
+							<select name="raca_id" required>
+								<option value="">Selecione</option>
+								{% for raca in racas %}
+									<option value="{{ raca.id }}" {% if animal.raca.id == raca.id %}selected{% endif %}>
+										{{ raca.tipo_animal.nome }} - {{ raca.nome }}
+									</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="column is-12">
+				<div class="field">
+					<label class="label">Descricao</label>
+					<div class="control">
+						<textarea
+							class="textarea"
+							name="descricao"
+							placeholder="Informacoes gerais sobre o animal"
+							rows="4"
+						>{{ animal.descricao|default:'' }}</textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="column is-12-tablet is-7-desktop">
+				<div class="field">
+					<label class="label">Foto</label>
+					<div class="control">
+						<input id="foto-input" class="input" type="file" name="foto" accept="image/*">
+					</div>
+					<p class="help">Selecione uma imagem para visualizar antes de salvar.</p>
+					{% if animal and animal.foto %}
+						<p class="help">Foto atual: {{ animal.foto.name }}</p>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="column is-12-tablet is-5-desktop">
+				<div class="foto-preview-card mb-4">
+					<p class="has-text-weight-semibold mb-2">Pre-visualizacao</p>
+					<div class="foto-preview-box">
+						<img
+							id="foto-preview"
+							class="foto-preview-img"
+							src="{% if animal and animal.foto %}{{ animal.foto.url }}{% endif %}"
+							alt="Pre-visualizacao da foto do animal"
+							{% if not animal or not animal.foto %}style="display: none;"{% endif %}
+						>
+						<div id="foto-preview-empty" class="foto-preview-empty" {% if animal and animal.foto %}style="display: none;"{% endif %}>
+							<span class="icon is-large"><i class="fas fa-image fa-2x"></i></span>
+							<p class="mt-2">Nenhuma foto selecionada</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="checkbox">
+						<input type="checkbox" name="disponivel" {% if animal.disponivel or not animal %}checked{% endif %}>
+						Animal disponivel para adocao
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="is-flex is-justify-content-flex-end" style="gap: 0.75rem;">
+		<a href="{% url 'animais:listar_animais' %}" class="button is-light">Cancelar</a>
+		<button class="button is-success" type="submit">
+			<span class="icon"><i class="fas fa-floppy-disk"></i></span>
+			<span>{% if animal %}Salvar Alteracoes{% else %}Cadastrar Animal{% endif %}</span>
+		</button>
+	</div>
+</form>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+	(function () {
+		const input = document.getElementById('foto-input');
+		const preview = document.getElementById('foto-preview');
+		const previewEmpty = document.getElementById('foto-preview-empty');
+
+		if (!input || !preview || !previewEmpty) {
+			return;
+		}
+
+		input.addEventListener('change', function () {
+			const file = input.files && input.files[0];
+
+			if (!file || !file.type.startsWith('image/')) {
+				return;
+			}
+
+			const reader = new FileReader();
+			reader.onload = function (event) {
+				preview.src = event.target.result;
+				preview.style.display = 'block';
+				previewEmpty.style.display = 'none';
+			};
+
+			reader.readAsDataURL(file);
+		});
+	})();
+</script>
+{% endblock %}

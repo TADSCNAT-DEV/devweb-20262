@@ -32,3 +32,4 @@ def listaranimais(request):
         animais=animais.objects.filter(raca=raca)
     
     return render(request,'animais/listanimais.html',{'animais':animais,'racas':racas,'raca':raca,'nome':nome})
+

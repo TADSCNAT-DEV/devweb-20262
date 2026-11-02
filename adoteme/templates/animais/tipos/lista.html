@@ -1,0 +1,93 @@
+{% extends 'principal/interna/base.html' %}
+
+{% block title %}Tipos de Animais - Adote-me{% endblock %}
+{% block page_title %}Listagem de Tipos de Animais{% endblock %}
+
+{% block content %}
+<div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+	<div>
+		<h1 class="title is-4 mb-1">Tipos de animais</h1>
+		<p class="subtitle is-6 mb-0">Gestao dos tipos cadastrados no sistema</p>
+	</div>
+	<button class="button is-success">
+		<span class="icon"><i class="fas fa-plus"></i></span>
+		<span>Novo Tipo</span>
+	</button>
+</div>
+
+<div class="box mb-5">
+	<form method="GET" action="">
+		<div class="field has-addons">
+			<div class="control is-expanded">
+				<input
+					class="input"
+					type="text"
+					name="busca"
+					placeholder="Buscar tipo por nome..."
+					value="{{ busca|default:'' }}"
+				>
+			</div>
+			<div class="control">
+				<button class="button is-info" type="submit">
+					<span class="icon"><i class="fas fa-search"></i></span>
+					<span>Buscar</span>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+{% if tipos %}
+	<div class="table-container">
+		<table class="table is-fullwidth is-striped is-hoverable">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome do Tipo</th>
+					<th class="has-text-centered">Qtde. de Racas</th>
+					<th class="has-text-centered">Acoes</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for tipo in tipos %}
+				<tr>
+					<td>{{ tipo.id }}</td>
+					<td>
+						<span class="icon-text">
+							<span class="icon has-text-info"><i class="fas fa-tag"></i></span>
+							<strong>{{ tipo.nome }}</strong>
+						</span>
+					</td>
+					<td class="has-text-centered">{{ tipo.racas.count }}</td>
+					<td class="has-text-centered">
+						<div class="buttons are-small is-centered">
+							<button class="button is-warning is-light">
+								<span class="icon"><i class="fas fa-edit"></i></span>
+								<span>Editar</span>
+							</button>
+							<button class="button is-danger is-light">
+								<span class="icon"><i class="fas fa-trash"></i></span>
+								<span>Excluir</span>
+							</button>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="notification is-info is-light mt-4 mb-0">
+		<p class="has-text-centered">
+			<strong>Total de tipos listados:</strong> {{ tipos|length }}
+		</p>
+	</div>
+{% else %}
+	<article class="message is-warning">
+		<div class="message-body has-text-centered">
+			<span class="icon mr-1"><i class="fas fa-exclamation-triangle"></i></span>
+			Nenhum tipo encontrado para a busca informada.
+		</div>
+	</article>
+{% endif %}
+{% endblock %}
