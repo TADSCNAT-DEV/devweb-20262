@@ -2,18 +2,22 @@ from django.shortcuts import get_object_or_404, render
 
 from .models import TipoAnimal,Raca,Animal
 
+from .services.baseanimaisservices import TipoAnimalService, RacaService
+from .services.animaisservices import AnimalService
+
+tipo_animal_service = TipoAnimalService()
+raca_service = RacaService()
+animal_service = AnimalService()
 
 def listatipoanimal(request):
     busca = request.GET.get('nome', '').strip()
-    tipos = TipoAnimal.objects.all().order_by('nome')
-    if busca:
-        tipos = tipos.filter(nome__icontains=busca)
-    return render(request, 'listatiposanimais.html', {'tipos': tipos, 'busca': busca})
+    tipos = tipo_animal_service.buscar_tipo_animal_por_nome(busca)
+    return render(request, 'animais/listatiposanimais.html', {'tipos': tipos, 'busca': busca})
 
 def listaracas(request, tipo_id):
-    tipo = get_object_or_404(TipoAnimal, pk=tipo_id)
-    racas = tipo.racas.all().order_by('nome')
-    return render(request, 'listaracas.html', {'tipo': tipo, 'racas': racas})
+    tipo = tipo_animal_service.obter_tipo_animal_por_id(tipo_id)
+    racas = raca_service.listar_racas_por_tipo(tipo_id)
+    return render(request, 'animais/listaracas.html', {'tipo': tipo, 'racas': racas})
 
 def listaranimais(request):
     nome=request.GET.get('nome','').strip()
@@ -27,4 +31,4 @@ def listaranimais(request):
     if raca:
         animais=animais.objects.filter(raca=raca)
     
-    return render(request,'listanimais.html',{'animais':animais,'racas':racas,'raca':raca,'nome':nome})
+    return render(request,'animais/listanimais.html',{'animais':animais,'racas':racas,'raca':raca,'nome':nome})

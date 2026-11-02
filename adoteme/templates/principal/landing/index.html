@@ -1,0 +1,167 @@
+{% extends 'principal/landing/base_landing.html' %}
+
+{% block title %}Animais Disponiveis | Adote-me{% endblock %}
+
+{% block content %}
+<div id="inicio" class="hero-gradient p-6 mb-5">
+				<div class="columns is-vcentered">
+					<div class="column is-8">
+						<h1 class="title is-1 mb-3">Encontre um companheiro para toda a vida</h1>
+						<p class="subtitle is-5 mb-5">
+							Aqui você encontra animais de estimação disponíveis para adoção e lares responsáveis que desejam dar um lar para um animal.
+						</p>
+						<div class="buttons">
+							<a href="#animais" class="button is-dark is-medium">Quero Adotar</a>
+							<a href="#sobre" class="button is-light is-medium">Como Funciona</a>
+						</div>
+					</div>
+					<div class="column is-4">
+						<div class="soft-card p-4">
+							<p class="heading">Consulta rápida</p>
+							<form method="GET" id="consulta" action="">
+								<div class="field mb-3">
+									<label class="label" for="nome">Nome do animal</label>
+									<div class="control has-icons-left">
+										<input
+											id="nome"
+											class="input"
+											type="text"
+											name="nome"
+											placeholder="Ex: Nina, Thor, Mel"
+											value="{{ filtro_nome|default:'' }}"
+										>
+										<span class="icon is-small is-left"><i class="fas fa-search"></i></span>
+									</div>
+								</div>
+
+								<div class="field mb-3">
+									<label class="label" for="tipo">Tipo de animal</label>
+									<div class="control">
+										<div class="select is-fullwidth">
+											<select name="tipo" id="tipo">
+												<option value="">Todos</option>
+												{% for tipo in tipos %}
+													<option value="{{ tipo.id }}" {% if filtro_tipo == tipo.id|stringformat:'s' %}selected{% endif %}>{{ tipo.nome }}</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="field mb-3">
+									<label class="label" for="raca">Raça</label>
+									<div class="control">
+										<div class="select is-fullwidth">
+											<select name="raca" id="raca">
+												<option value="">Todas</option>
+												{% for raca in racas %}
+													<option value="{{ raca.id }}" {% if filtro_raca == raca.id|stringformat:'s' %}selected{% endif %}>{{ raca.tipo_animal.nome }} - {{ raca.nome }}</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="field mb-4">
+									<label class="label">Disponibilidade</label>
+									<div class="control">
+										<div class="select is-fullwidth">
+											<select name="disponivel">
+												<option value="todos" {% if filtro_disponivel == 'todos' %}selected{% endif %}>Todos</option>
+												<option value="sim" {% if filtro_disponivel == 'sim' %}selected{% endif %}>Disponiveis</option>
+												<option value="nao" {% if filtro_disponivel == 'nao' %}selected{% endif %}>Indisponiveis</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<button class="button is-warning is-fullwidth has-text-weight-semibold" type="submit">
+									Consultar Animais
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section id="sobre" class="section pt-4">
+		<div class="container">
+			<div class="columns">
+				<div class="column">
+					<div class="metric">
+						<p class="heading">Animais Disponiveis</p>
+						<p class="title is-3">{{ total_animais|default:0 }}</p>
+					</div>
+				</div>
+				<div class="column">
+					<div class="metric">
+						<p class="heading">Tipos Cadastrados</p>
+						<p class="title is-3">{{ total_tipos|default:0 }}</p>
+					</div>
+				</div>
+				<div class="column">
+					<div class="metric">
+						<p class="heading">Adoções Realizadas</p>
+						<p class="title is-3">{{ total_adocoes|default:0 }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<div class="soft-card p-5">
+	<h2 class="title is-4 mb-2">
+		<span class="icon has-text-warning-dark"><i class="fas fa-cat"></i></span>
+		<span>Animais Disponíveis para Adoção</span>
+	</h2>
+	<p class="mb-5 has-text-grey-dark">Selecione seu futuro companheiro e inicie o processo de adoção responsável.</p>
+
+	{% if animais %}
+		<div class="columns is-multiline">
+			{% for animal in animais %}
+			<div class="column is-12-mobile is-6-tablet is-4-desktop">
+				<article class="card animal-card h-full">
+					<div class="card-image">
+						<figure class="image is-4by3 animal-card-media">
+							{% if animal.foto %}
+								<img src="{{ animal.foto.url }}" alt="Foto de {{ animal.nome }}">
+							{% else %}
+								<div class="animal-card-placeholder is-flex is-justify-content-center is-align-items-center">
+									<span class="icon is-large has-text-warning-dark"><i class="fas fa-cat fa-2x"></i></span>
+								</div>
+							{% endif %}
+						</figure>
+					</div>
+
+					<div class="card-content">
+						<p class="title is-5 mb-3">{{ animal.nome }}</p>
+
+						<div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
+							<span class="has-text-grey">Sexo</span>
+							<strong>{{ animal.get_sexo_display }}</strong>
+						</div>
+
+						<div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+							<span class="has-text-grey">Idade</span>
+							<strong>{{ animal.idade }} ano(s)</strong>
+						</div>
+
+						<div>
+							{% if animal.disponivel %}
+								<span class="tag is-success is-light is-medium">Disponível</span>
+							{% else %}
+								<span class="tag is-danger is-light is-medium">Indisponível</span>
+							{% endif %}
+						</div>
+					</div>
+				</article>
+			</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<article class="message is-warning is-light">
+			<div class="message-body">
+				Nenhum animal disponível para adoção no momento.
+			</div>
+		</article>
+	{% endif %}
+</div>
+{% endblock %}
+

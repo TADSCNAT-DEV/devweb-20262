@@ -1,0 +1,116 @@
+{% extends 'principal/interna/base.html' %}
+
+{% block title %}Adote-me{% endblock %}
+{% block page_title %}Administração{% endblock %}
+
+
+{% block content %}
+<div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+	<div>
+		<h1 class="title is-4 mb-1">Visao geral da plataforma</h1>
+		<p class="subtitle is-6 mb-0">Acompanhe os principais indicadores do sistema de adocao.</p>
+	</div>
+	<a href="{% url 'animais:listar_animais' %}" class="button is-info is-light">
+		<span class="icon"><i class="fas fa-table-list"></i></span>
+		<span>Ver animais</span>
+	</a>
+</div>
+
+<div class="columns is-multiline mb-2">
+	<div class="column is-12-mobile is-6-tablet is-4-desktop">
+		<div class="dashboard-stat p-5">
+			<div class="is-flex is-justify-content-space-between is-align-items-flex-start mb-4">
+				<div>
+					<p class="heading mb-2">Animais</p>
+					<p class="title is-2 mb-1">{{ total_animais|default:0 }}</p>
+					<p class="has-text-grey-dark">Total de registros cadastrados.</p>
+				</div>
+				<span class="dashboard-icon"><i class="fas fa-dog fa-lg"></i></span>
+			</div>
+			<p class="has-text-grey">Disponiveis no momento: <strong>{{ animais_disponiveis|default:0 }}</strong></p>
+		</div>
+	</div>
+
+	<div class="column is-12-mobile is-6-tablet is-4-desktop">
+		<div class="dashboard-stat p-5">
+			<div class="is-flex is-justify-content-space-between is-align-items-flex-start mb-4">
+				<div>
+					<p class="heading mb-2">Racas</p>
+					<p class="title is-2 mb-1">{{ total_racas|default:0 }}</p>
+					<p class="has-text-grey-dark">Variedades cadastradas na plataforma.</p>
+				</div>
+				<span class="dashboard-icon"><i class="fas fa-tags fa-lg"></i></span>
+			</div>
+			<p class="has-text-grey">Base pronta para segmentacao e filtros.</p>
+		</div>
+	</div>
+
+	<div class="column is-12-mobile is-12-tablet is-4-desktop">
+		<div class="dashboard-stat is-highlight p-5">
+			<div class="is-flex is-justify-content-space-between is-align-items-flex-start mb-4">
+				<div>
+					<p class="heading mb-2">Pedidos de adocao</p>
+					<p class="title is-2 mb-1">{{ total_pedidos_adocao|default:0 }}</p>
+					<p class="has-text-grey-light">Solicitacoes registradas no fluxo de adocao.</p>
+				</div>
+				<span class="dashboard-icon" style="background: rgba(255,255,255,0.16); color: #fff;">
+					<i class="fas fa-heart-circle-check fa-lg"></i>
+				</span>
+			</div>
+			<p class="has-text-white">Em analise: <strong>{{ pedidos_em_analise|default:0 }}</strong></p>
+		</div>
+	</div>
+</div>
+
+<div class="columns is-multiline">
+	<div class="column is-12-tablet is-7-desktop">
+		<div class="dashboard-panel p-5">
+			<h2 class="title is-5 mb-4">Resumo operacional</h2>
+			<div class="columns">
+				<div class="column">
+					<article class="notification is-success is-light mb-0">
+						<p class="heading">Animais disponiveis</p>
+						<p class="title is-4 mb-0">{{ animais_disponiveis|default:0 }}</p>
+					</article>
+				</div>
+				<div class="column">
+					<article class="notification is-danger is-light mb-0">
+						<p class="heading">Animais indisponiveis</p>
+						<p class="title is-4 mb-0">{{ animais_indisponiveis|default:0 }}</p>
+					</article>
+				</div>
+			</div>
+
+			<div class="content mt-5">
+				<p class="mb-3"><strong>Estado inicial do painel</strong></p>
+				<p class="has-text-grey-dark">
+					Esta pagina serve como ponto de partida do dashboard administrativo. Mesmo antes de todas as
+					rotas de gestao estarem prontas, ela ja concentra os principais indicadores para acompanhamento.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="column is-12-tablet is-5-desktop">
+		<div class="dashboard-panel p-5">
+			<h2 class="title is-5 mb-4">Acessos rapidos</h2>
+			<div class="is-flex is-flex-direction-column" style="gap: 0.85rem;">
+				<a href="{% url 'animais:listar_animais' %}" class="quick-link">
+					<span>
+						<span class="icon mr-2"><i class="fas fa-dog"></i></span>
+						Cadastro de animais
+					</span>
+					<span class="icon"><i class="fas fa-arrow-right"></i></span>
+				</a>
+				<a href="#" class="quick-link">
+					<span>
+						<span class="icon mr-2"><i class="fas fa-file-signature"></i></span>
+						Pedidos de adocao
+					</span>
+					<span class="icon"><i class="fas fa-arrow-right"></i></span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

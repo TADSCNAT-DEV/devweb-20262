@@ -7,6 +7,10 @@ class TipoAnimal(models.Model):
 
     def __str__(self):
         return self.nome
+    class Meta:
+        verbose_name = "Tipo de Animal"
+        verbose_name_plural = "Tipos de Animais"
+        ordering = ['nome']
 
 class Raca(models.Model):
     nome = models.CharField(verbose_name="Nome",max_length=100)
@@ -14,6 +18,11 @@ class Raca(models.Model):
 
     def __str__(self):
         return f"{self.tipo_animal.nome}-{self.nome}"
+
+    class Meta:
+        verbose_name = "Raça"
+        verbose_name_plural = "Raças"
+        ordering = ['nome']
     
 class Animal(models.Model):
     nome = models.CharField(verbose_name="Nome",max_length=255)
@@ -33,5 +42,10 @@ class Animal(models.Model):
         hoje = date.today()
         idade = hoje.year - self.dataNascimento.year - ((hoje.month, hoje.day) < (self.dataNascimento.month, self.dataNascimento.day))
         return idade
+
+    class Meta:
+        verbose_name = "Animal"
+        verbose_name_plural = "Animais"
+        ordering = ['nome']
 
 
