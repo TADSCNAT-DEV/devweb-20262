@@ -1,9 +1,18 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 class TipoAnimal(models.Model):
     nome = models.CharField(verbose_name="Nome",max_length=100,unique=True)
+
+    def clean(self):
+        erros={}
+        if not self.nome:
+            erros['nome']='O nome é obrigatório'
+        elif len(self.nome)<3:
+            erros['nome']='O nome precisa ter mais de 3 caracteres'
+        if erros:
+            raise ValidationError(erros)
 
     def __str__(self):
         return self.nome

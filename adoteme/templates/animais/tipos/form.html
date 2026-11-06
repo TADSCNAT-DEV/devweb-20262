@@ -1,0 +1,64 @@
+{% extends 'principal/interna/base.html' %}
+
+{% block title %}{% if tipo_animal %}Editar tipo de animal{% else %}Cadastrar tipo de animal{% endif %} - Adote-me{% endblock %}
+{% block page_title %}{% if tipo_animal %}Editar tipo de animal{% else %}Cadastrar tipo de animal{% endif %}{% endblock %}
+
+{% block content %}
+<div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+	<div>
+		<h1 class="title is-4 mb-1">{% if tipo_animal %}Editar tipo{% else %}Novo tipo{% endif %}</h1>
+		<p class="subtitle is-6 mb-0">Informe o nome do tipo de animal.</p>
+	</div>
+	<a href="{% url 'animais:listar_tipos_animais' %}" class="button is-light">
+		<span class="icon"><i class="fas fa-arrow-left"></i></span>
+		<span>Voltar</span>
+	</a>
+</div>
+
+{% if erros %}
+	<div class="notification is-danger is-light" role="alert">
+		<p class="has-text-weight-semibold">Não foi possível salvar o tipo de animal:</p>
+		<ul>
+			{% for campo, mensagens in erros.items %}
+				{% for mensagem in mensagens %}
+					<li>{{ mensagem }}</li>
+				{% endfor %}
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}
+
+<form
+	method="POST"
+	action="{% if tipo_animal %}{% url 'animais:atualizar_tipo_animal' tipo_animal.id %}{% else %}{% url 'animais:cadastrar_tipo_animal' %}{% endif %}"
+>
+	{% csrf_token %}
+	<div class="box">
+		<div class="field">
+			<label class="label" for="nome">Nome do tipo</label>
+			<div class="control">
+				<input
+					class="input{% if erros.nome %} is-danger{% endif %}"
+					id="nome"
+					type="text"
+					name="nome"
+					value="{{ nome|default:'' }}"
+					placeholder="Ex.: Cachorro"
+					maxlength="100"
+					
+					required
+				>
+			</div>
+			<p class="help">Use entre 3 e 100 caracteres. O nome deve ser único.</p>
+		</div>
+	</div>
+
+	<div class="is-flex is-justify-content-flex-end" style="gap: 0.75rem;">
+		<a href="{% url 'animais:listar_tipos_animais' %}" class="button is-light">Cancelar</a>
+		<button class="button is-success" type="submit">
+			<span class="icon"><i class="fas fa-floppy-disk"></i></span>
+			<span>{% if tipo_animal %}Salvar alterações{% else %}Cadastrar tipo{% endif %}</span>
+		</button>
+	</div>
+</form>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render,redirect
 
 from .models import TipoAnimal,Raca,Animal
-
+from django.core.exceptions import ValidationError
 from .services.baseanimaisservices import TipoAnimalService, RacaService
 from .services.animaisservices import AnimalService
 
@@ -25,6 +25,49 @@ def listar_tipos_animais(request):
     busca=request.GET.get('busca', '').strip()
     tipos = tipo_animal_service.buscar_tipo_animal_por_nome(busca or None)
     return render(request, 'animais/tipos/lista.html', {'tipos': tipos,'busca':busca})
+
+def cadastrar_tipo_animal(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        try:
+            tipo_animal_service.cadastrar_tipo_animal(nome)
+        except ValidationError as e:
+            return render(request, 'animais/tipos/form.html', {'erros': e.message_dict, 'nome': nome})
+        return redirect('animais:listar_tipos_animais')
+    return render(request, 'animais/tipos/form.html')
+
+
+def atualizar_tipo_animal(request, tipo_animal_id):
+    tipo_animal = tipo_animal_service.obter_tipo_animal_por_id(tipo_animal_id)
+    if not tipo_animal:
+        return redirect('animais:listar_tipos_animais')
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        try:
+            tipo_animal_service.atualizar_tipo_animal(tipo_animal_id, nome)
+        except ValidationError as e:
+            return render(request, 'animais/tipos/form.html', {
+                'erros': e.message_dict,
+                'tipo_animal': tipo_animal,
+                'nome': nome,
+            })
+        return redirect('animais:listar_tipos_animais')
+
+    return render(request, 'animais/tipos/form.html', {
+        'tipo_animal': tipo_animal,
+        'nome': tipo_animal.nome,
+    })
+
+def excluir_tipo_animal(request, tipo_animal_id):
+    tipo_animal = tipo_animal_service.obter_tipo_animal_por_id(tipo_animal_id)
+    if tipo_animal:
+        tipo_animal.delete()
+    return redirect('animais:listar_tipos_animais')
+
+def listar_racas(request):
+    busca=request.GET.get('busca','').strip()
+    racas=raca_service.buscar_racas_por_nome(busca or None)
+    return render(request,'animais/racas/lista.html',{'racas':racas,'busca':busca})
 
 
 def cadastrar_animal(request):
