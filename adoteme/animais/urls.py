@@ -2,12 +2,14 @@ from django.urls import path
 
 from . import views
 
+from animais.viewsclass.viewstipoanimal import TipoAnimalListView,TipoAnimalCreateView,TipoAnimalUpdateView
+
 app_name = 'animais'
 
 urlpatterns = [
-    path('tipos/', views.listar_tipos_animais, name='listar_tipos_animais'),
-    path('tipos/cadastrar/', views.cadastrar_tipo_animal, name='cadastrar_tipo_animal'),
-    path('tipos/atualizar/<int:tipo_animal_id>/', views.atualizar_tipo_animal, name='atualizar_tipo_animal'),
+    path('tipos/', TipoAnimalListView.as_view(), name='listar_tipos_animais'),
+    path('tipos/cadastrar/', TipoAnimalCreateView.as_view(), name='cadastrar_tipo_animal'),
+    path('tipos/atualizar/<int:tipo_animal_id>/', TipoAnimalUpdateView.as_view(), name='atualizar_tipo_animal'),
     path('tipos/excluir/<int:tipo_animal_id>/', views.excluir_tipo_animal, name='excluir_tipo_animal'),
     path('cadastrar/', views.cadastrar_animal, name='cadastrar_animal'),
     path('atualizar/<int:animal_id>/', views.atualizar_animal, name='atualizar_animal'),

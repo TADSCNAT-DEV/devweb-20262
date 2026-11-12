@@ -61,10 +61,10 @@
 					<td class="has-text-centered">{{ tipo.racas.count }}</td>
 					<td class="has-text-centered">
 						<div class="buttons are-small is-centered">
-							<button class="button is-warning is-light">
+							<a class="button is-warning is-light" href="{% url 'animais:atualizar_tipo_animal' tipo.id %}">
 								<span class="icon"><i class="fas fa-edit"></i></span>
 								<span>Editar</span>
-							</button>
+							</a>
 							<button class="button is-danger is-light">
 								<span class="icon"><i class="fas fa-trash"></i></span>
 								<span>Excluir</span>

@@ -1,5 +1,5 @@
 from animais.models import TipoAnimal, Raca
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist, MultipleObjectsReturned
 
 class TipoAnimalService:
     def obter_tipo_animal_por_id(self, tipo_animal_id):
@@ -32,6 +32,13 @@ class TipoAnimalService:
             raise e  # Propaga a exceção para ser tratada em outro lugar
         tipo_animal.save()
         return tipo_animal
+
+    def excluir_tipo_animal(self,tipo_animal_id):
+        try:
+            tipo_animal=TipoAnimal.objects.get(pk=tipo_animal_id)
+            tipo_animal.delete()
+        except ObjectDoesNotExist as e:
+            raise ValidationError("Tipo de Animal não encontrado")
 
 class RacaService:
     def obter_raca_por_id(self, raca_id):
