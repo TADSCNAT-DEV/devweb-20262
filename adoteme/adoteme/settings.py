@@ -113,7 +113,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 LANGUAGE_CODE = "pt-br"
 
 TIME_ZONE = "UTC"
-
+LOGIN_URL = 'usuarios:login'
+LOGIN_REDIRECT_URL = 'principal:index_logado'
 USE_I18N = True
 
 USE_TZ = True

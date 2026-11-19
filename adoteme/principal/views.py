@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from animais.services.animaisservices import AnimalService
 from animais.services.baseanimaisservices import RacaService, TipoAnimalService
 
@@ -6,7 +7,7 @@ animaiservice = AnimalService()
 raca_service = RacaService()
 tipo_animal_service = TipoAnimalService()
 
-
+@login_required
 def index_logado(request):
     context = {
         'total_animais':animaiservice.listar_animais().count(),

@@ -8,7 +8,7 @@ from .services.animaisservices import AnimalService
 tipo_animal_service = TipoAnimalService()
 raca_service = RacaService()
 animal_service = AnimalService()
-
+'''
 def listatipoanimal(request):
     busca = request.GET.get('nome', '').strip()
     tipos = tipo_animal_service.buscar_tipo_animal_por_nome(busca)
@@ -63,7 +63,7 @@ def excluir_tipo_animal(request, tipo_animal_id):
     if tipo_animal:
         tipo_animal.delete()
     return redirect('animais:listar_tipos_animais')
-
+'''
 def listar_racas(request):
     busca=request.GET.get('busca','').strip()
     racas=raca_service.buscar_racas_por_nome(busca or None)

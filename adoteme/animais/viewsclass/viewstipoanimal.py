@@ -1,9 +1,11 @@
 from django.views.generic import  ListView
 from django.views import View
 from django.core.exceptions import ValidationError
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render,redirect
 from animais.services.baseanimaisservices import TipoAnimalService
-class TipoAnimalListView(ListView):
+
+class TipoAnimalListView(LoginRequiredMixin, ListView):
     template_name="animais/tipos/lista.html"
     context_object_name="tipos"
     def get_context_data(self, **kwargs):
@@ -17,7 +19,7 @@ class TipoAnimalListView(ListView):
         listaTipoAnimal=tipoAnimalService.buscar_tipo_animal_por_nome(busca)
         return listaTipoAnimal
 
-class TipoAnimalCreateView(View):
+class TipoAnimalCreateView(LoginRequiredMixin, View):
     template_name="animais/tipos/form.html"
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
@@ -30,7 +32,7 @@ class TipoAnimalCreateView(View):
             return render(request,self.template_name,{'erros': e.message_dict, 'nome': nome})
         return redirect('animais:listar_tipos_animais')
 
-class TipoAnimalUpdateView(View):
+class TipoAnimalUpdateView(LoginRequiredMixin, View):
     template_name="animais/tipos/form.html"
 
     def get(self,request,tipo_animal_id):
@@ -53,7 +55,7 @@ class TipoAnimalUpdateView(View):
             })
         return redirect('animais:listar_tipos_animais')
 
-class TipoAnimalExcluirView(View):
+class TipoAnimalExcluirView(LoginRequiredMixin, View):
     def get(self,request,tipo_animal_id):
         tipoAnimalService=TipoAnimalService()
         tipoAnimal=tipoAnimalService.obter_tipo_animal_por_id(tipo_animal_id)

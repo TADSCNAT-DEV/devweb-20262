@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login - Adote-me</title>
+	<!-- Fontes -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+	
+	<!-- Frameworks CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	
+	<!-- Estilos do Projeto -->
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+</head>
+<body>
+	<div class="login-container">
+		<div class="login-wrapper">
+			<!-- Sidebar com Branding -->
+			<aside class="login-sidebar">
+				<div>
+					<div class="login-branding">
+						<div class="login-logo">
+							<div class="icon">
+								<i class="fas fa-paw"></i>
+							</div>
+							<div>
+								<div class="title">Adote-me</div>
+								<div class="subtitle">Sistema de Gestão</div>
+							</div>
+						</div>
+						<p class="login-description">
+							Bem-vindo ao painel administrativo de gestão de adoções. Faça login para continuar.
+						</p>
+					</div>
+
+					<div class="login-features">
+						<div class="login-feature">
+							<div class="login-feature-icon">
+								<i class="fas fa-shield-alt"></i>
+							</div>
+							<div class="login-feature-text">
+								<strong>Seguro</strong>
+								<span>Seus dados são protegidos com criptografia</span>
+							</div>
+						</div>
+
+						<div class="login-feature">
+							<div class="login-feature-icon">
+								<i class="fas fa-chart-line"></i>
+							</div>
+							<div class="login-feature-text">
+								<strong>Análises</strong>
+								<span>Relatórios detalhados e insights</span>
+							</div>
+						</div>
+
+						<div class="login-feature">
+							<div class="login-feature-icon">
+								<i class="fas fa-users"></i>
+							</div>
+							<div class="login-feature-text">
+								<strong>Colaboração</strong>
+								<span>Trabalhe com sua equipe em tempo real</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div style="text-align: center; font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+					<p>Adote-me © {% now "Y" %}</p>
+				</div>
+			</aside>
+
+			<!-- Formulário de Login -->
+			<div class="login-form-wrapper">
+				<div class="login-form-container">
+					<div class="login-form-header">
+						<h2 class="title">Login</h2>
+						<p class="subtitle">Entre com suas credenciais</p>
+					</div>
+
+					<!-- Mensagem de Erro -->
+					{% if error %}
+					<div class="error-message">
+						<div class="icon">
+							<i class="fas fa-exclamation-circle"></i>
+						</div>
+						<div>
+							<strong>Erro ao fazer login</strong>
+							<p style="margin: 0.25rem 0 0 0;">{{ error }}</p>
+						</div>
+					</div>
+					{% endif %}
+
+					<!-- Formulário -->
+					<form method="POST" class="login-form">
+						{% csrf_token %}
+
+						<div class="form-group">
+							<label for="username">Usuário ou Email</label>
+							<input 
+								type="text" 
+								id="username" 
+								name="username" 
+								placeholder="Digite seu usuário"
+								required
+								autofocus
+							>
+						</div>
+
+						<div class="form-group">
+							<label for="password">Senha</label>
+							<input 
+								type="password" 
+								id="password" 
+								name="password" 
+								placeholder="Digite sua senha"
+								required
+							>
+						</div>
+
+						<div class="form-actions">
+							<div class="form-remember">
+								<input type="checkbox" id="remember" name="remember">
+								<label for="remember">Lembrar-me</label>
+							</div>
+							<a href="#" class="form-link">Esqueceu a senha?</a>
+						</div>
+
+						<button type="submit" class="button-login">
+							<span class="icon-text">
+								<span>Entrar no Sistema</span>
+								<span class="icon">
+									<i class="fas fa-arrow-right"></i>
+								</span>
+							</span>
+						</button>
+
+						<div class="signup-link">
+							Não tem uma conta? <a href="#">Solicite acesso</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
