@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render,redirect
-
+from django.contrib.auth.decorators import login_required
 from .models import TipoAnimal,Raca,Animal
 from django.core.exceptions import ValidationError
 from .services.baseanimaisservices import TipoAnimalService, RacaService
@@ -64,12 +64,13 @@ def excluir_tipo_animal(request, tipo_animal_id):
         tipo_animal.delete()
     return redirect('animais:listar_tipos_animais')
 '''
+@login_required
 def listar_racas(request):
     busca=request.GET.get('busca','').strip()
     racas=raca_service.buscar_racas_por_nome(busca or None)
     return render(request,'animais/racas/lista.html',{'racas':racas,'busca':busca})
 
-
+@login_required
 def cadastrar_animal(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
@@ -94,7 +95,7 @@ def cadastrar_animal(request):
         return redirect('animais:listar_animais')
     racas = raca_service.listar_racas()
     return render(request, 'animais/form.html', {'racas': racas})
-
+@login_required
 def atualizar_animal(request, animal_id):
     animal = animal_service.obter_animal_por_id(animal_id)
     if not animal:
@@ -125,13 +126,13 @@ def atualizar_animal(request, animal_id):
 
     racas = raca_service.listar_racas()
     return render(request, 'animais/form.html', {'animal': animal, 'racas': racas})
-
+@login_required
 def excluir_animal(request, animal_id):
     animal = animal_service.obter_animal_por_id(animal_id)
     if animal:
         animal_service.excluir_animal(animal_id)
     return redirect('animais:listar_animais')
-
+@login_required
 def listaranimais(request):
     busca=request.GET.get('busca', '').strip()
     animais=animal_service.buscar(nome=busca or None)

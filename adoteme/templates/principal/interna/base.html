@@ -87,16 +87,18 @@
 						<p class="heading mb-1">Area Logada</p>
 						<h2 class="title is-5 mb-0">{% block page_title %}Gestao de Animais{% endblock %}</h2>
 					</div>
-					<div class="is-flex is-align-items-center">
-						<span class="tag is-info is-light is-medium mr-3">
-							<span class="icon"><i class="fas fa-user"></i></span>
-							<span>Usuario autenticado</span>
-						</span>
-						<a href="{% url 'usuarios:logout' %}" class="button is-danger is-outlined">
-							<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
-							<span>Sair</span>
-						</a>
-					</div>
+					{% if request.user.is_authenticated %}
+						<div class="is-flex is-align-items-center">
+							<span class="tag is-info is-light is-medium mr-3">
+								<span class="icon"><i class="fas fa-user"></i></span>
+								<span>{{request.user.username}}</span>
+							</span>
+							<a href="{% url 'usuarios:logout' %}" class="button is-danger is-outlined">
+								<span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+								<span>Sair</span>
+							</a>
+						</div>
+					{% endif %}
 				</div>
 			</header>
 

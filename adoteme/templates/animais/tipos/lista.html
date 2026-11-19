@@ -9,10 +9,12 @@
 		<h1 class="title is-4 mb-1">Tipos de animais</h1>
 		<p class="subtitle is-6 mb-0">Gestão dos tipos cadastrados no sistema</p>
 	</div>
-	<a href="{% url 'animais:cadastrar_tipo_animal' %}" class="button is-success">
-		<span class="icon"><i class="fas fa-plus"></i></span>
-		<span>Novo Tipo de Animal</span>
-	</a>
+	{% if request.user.is_authenticated %}
+		<a href="{% url 'animais:cadastrar_tipo_animal' %}" class="button is-success">
+			<span class="icon"><i class="fas fa-plus"></i></span>
+			<span>Novo Tipo de Animal</span>
+		</a>
+	{% endif %}
 </div>
 
 <div class="box mb-5">
@@ -45,7 +47,9 @@
 					<th>ID</th>
 					<th>Nome do Tipo</th>
 					<th class="has-text-centered">Qtde. de Raças</th>
-					<th class="has-text-centered">Ações</th>
+					{% if request.user.is_authenticated %}
+						<th class="has-text-centered">Ações</th>
+					{% endif %}	
 				</tr>
 			</thead>
 			<tbody>
@@ -59,18 +63,20 @@
 						</span>
 					</td>
 					<td class="has-text-centered">{{ tipo.racas.count }}</td>
-					<td class="has-text-centered">
-						<div class="buttons are-small is-centered">
-							<a class="button is-warning is-light" href="{% url 'animais:atualizar_tipo_animal' tipo.id %}">
-								<span class="icon"><i class="fas fa-edit"></i></span>
-								<span>Editar</span>
-							</a>
-							<button class="button is-danger is-light">
-								<span class="icon"><i class="fas fa-trash"></i></span>
-								<span>Excluir</span>
-							</button>
-						</div>
-					</td>
+					{% if request.user.is_authenticated %}
+						<td class="has-text-centered">
+							<div class="buttons are-small is-centered">
+								<a class="button is-warning is-light" href="{% url 'animais:atualizar_tipo_animal' tipo.id %}">
+									<span class="icon"><i class="fas fa-edit"></i></span>
+									<span>Editar</span>
+								</a>
+								<button class="button is-danger is-light">
+									<span class="icon"><i class="fas fa-trash"></i></span>
+									<span>Excluir</span>
+								</button>
+							</div>
+						</td>
+					{% endif %}
 				</tr>
 				{% endfor %}
 			</tbody>
