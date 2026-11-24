@@ -1,6 +1,8 @@
 from django.views.generic import  ListView
 from django.views import View
+from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.db.models.deletion import ProtectedError
 from django.contrib.auth.mixins import LoginRequiredMixin
 from principal.mixins import AbrigoMixin
 from django.shortcuts import render,redirect
@@ -31,6 +33,7 @@ class TipoAnimalCreateView(LoginRequiredMixin,AbrigoMixin, View):
             tipoAnimalService.cadastrar_tipo_animal(nome)
         except ValidationError as e:
             return render(request,self.template_name,{'erros': e.message_dict, 'nome': nome})
+        messages.success(request, "Tipo de animal cadastrado com sucesso.")
         return redirect('animais:listar_tipos_animais')
 
 class TipoAnimalUpdateView(LoginRequiredMixin, AbrigoMixin, View):
@@ -54,17 +57,17 @@ class TipoAnimalUpdateView(LoginRequiredMixin, AbrigoMixin, View):
                 'erros': e.message_dict,
                 'tipo_animal': tipoAnimal,
             })
+        messages.success(request, "Tipo de animal atualizado com sucesso.")
         return redirect('animais:listar_tipos_animais')
 
 class TipoAnimalExcluirView(LoginRequiredMixin, AbrigoMixin, View):
-    def get(self,request,tipo_animal_id):
-        tipoAnimalService=TipoAnimalService()
-        tipoAnimal=tipoAnimalService.obter_tipo_animal_por_id(tipo_animal_id)
+    def post(self, request, tipo_animal_id):
         try:
-            tipoAnimalService.excluir_tipo_animal(tipo_animal_id)
-        except ValidationError as e:
-            return render(request, self.template_name, {
-                            'erros': e.message_dict,
-                            'tipo_animal': tipoAnimal,
-                        })
+            TipoAnimalService().excluir_tipo_animal(tipo_animal_id)
+        except ProtectedError:
+            messages.error(request, "Não é possível excluir um tipo de animal que possui raças vinculadas.")
+        except ValidationError as error:
+            messages.error(request, error.messages[0])
+        else:
+            messages.success(request, "Tipo de animal excluído com sucesso.")
         return redirect('animais:listar_tipos_animais')

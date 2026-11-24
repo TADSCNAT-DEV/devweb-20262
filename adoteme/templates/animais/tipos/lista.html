@@ -70,10 +70,37 @@
 									<span class="icon"><i class="fas fa-edit"></i></span>
 									<span>Editar</span>
 								</a>
-								<button class="button is-danger is-light">
+								<button class="button is-danger is-light" type="button" onclick="openDeleteModal('{{ tipo.id }}')">
 									<span class="icon"><i class="fas fa-trash"></i></span>
 									<span>Excluir</span>
 								</button>
+							</div>
+
+							<div id="delete-modal-{{ tipo.id }}" class="modal">
+								<div class="modal-background" onclick="closeDeleteModal('{{ tipo.id }}')"></div>
+								<div class="modal-card">
+									<header class="modal-card-head">
+										<p class="modal-card-title">Confirmar exclusão</p>
+										<button class="delete" aria-label="Fechar" type="button" onclick="closeDeleteModal('{{ tipo.id }}')"></button>
+									</header>
+									<section class="modal-card-body">
+										<p>Deseja realmente excluir o tipo de animal <strong>{{ tipo.nome }}</strong>?</p>
+										{% if tipo.racas.count %}
+											<p class="mt-2 has-text-danger">Este tipo possui raças vinculadas e não poderá ser excluído enquanto elas existirem.</p>
+										{% else %}
+											<p class="mt-2 has-text-grey-dark">Essa ação não poderá ser desfeita.</p>
+										{% endif %}
+									</section>
+									<footer class="modal-card-foot is-justify-content-flex-end">
+										<button class="button" type="button" onclick="closeDeleteModal('{{ tipo.id }}')">Cancelar</button>
+										{% if not tipo.racas.count %}
+											<form method="POST" action="{% url 'animais:excluir_tipo_animal' tipo.id %}">
+												{% csrf_token %}
+												<button class="button is-danger" type="submit">Excluir</button>
+											</form>
+										{% endif %}
+									</footer>
+								</div>
 							</div>
 						</td>
 					{% endif %}
@@ -96,4 +123,22 @@
 		</div>
 	</article>
 {% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+	function openDeleteModal(tipoId) {
+		const modal = document.getElementById(`delete-modal-${tipoId}`);
+		if (modal) {
+			modal.classList.add('is-active');
+		}
+	}
+
+	function closeDeleteModal(tipoId) {
+		const modal = document.getElementById(`delete-modal-${tipoId}`);
+		if (modal) {
+			modal.classList.remove('is-active');
+		}
+	}
+</script>
 {% endblock %}

@@ -101,7 +101,9 @@
 					{% endif %}
 				</div>
 			</header>
-
+			{% if messages %}
+				{% include "principal/interna/message.html" %}
+			{% endif %}
 			<main class="main-content">
 				<div class="content-card p-5">
 					{% block content %}{% endblock %}

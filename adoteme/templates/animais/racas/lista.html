@@ -70,13 +70,31 @@
 									<span class="icon"><i class="fas fa-edit"></i></span>
 									<span>Editar</span>
 								</a>
-								<form method="POST" action="{% url 'animais:excluir_raca' raca.id %}" onsubmit="return confirm('Excluir esta raça também removerá os animais vinculados. Deseja continuar?');">
-									{% csrf_token %}
-									<button class="button is-danger is-light" type="submit">
-										<span class="icon"><i class="fas fa-trash"></i></span>
-										<span>Excluir</span>
-									</button>
-								</form>
+								<button class="button is-danger is-light" type="button" onclick="openDeleteModal('{{ raca.id }}')">
+									<span class="icon"><i class="fas fa-trash"></i></span>
+									<span>Excluir</span>
+								</button>
+							</div>
+
+							<div id="delete-modal-{{ raca.id }}" class="modal">
+								<div class="modal-background" onclick="closeDeleteModal('{{ raca.id }}')"></div>
+								<div class="modal-card">
+									<header class="modal-card-head">
+										<p class="modal-card-title">Confirmar exclusão</p>
+										<button class="delete" aria-label="Fechar" type="button" onclick="closeDeleteModal('{{ raca.id }}')"></button>
+									</header>
+									<section class="modal-card-body">
+										<p>Deseja realmente excluir a raça <strong>{{ raca.nome }}</strong>?</p>
+										<p class="mt-2 has-text-grey-dark">Os animais vinculados a esta raça também serão excluídos. Essa ação não poderá ser desfeita.</p>
+									</section>
+									<footer class="modal-card-foot is-justify-content-flex-end">
+										<button class="button" type="button" onclick="closeDeleteModal('{{ raca.id }}')">Cancelar</button>
+										<form method="POST" action="{% url 'animais:excluir_raca' raca.id %}">
+											{% csrf_token %}
+											<button class="button is-danger" type="submit">Excluir</button>
+										</form>
+									</footer>
+								</div>
 							</div>
 						</td>
 					{% endif %}
@@ -99,4 +117,22 @@
 		</div>
 	</article>
 {% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+	function openDeleteModal(racaId) {
+		const modal = document.getElementById(`delete-modal-${racaId}`);
+		if (modal) {
+			modal.classList.add('is-active');
+		}
+	}
+
+	function closeDeleteModal(racaId) {
+		const modal = document.getElementById(`delete-modal-${racaId}`);
+		if (modal) {
+			modal.classList.remove('is-active');
+		}
+	}
+</script>
 {% endblock %}

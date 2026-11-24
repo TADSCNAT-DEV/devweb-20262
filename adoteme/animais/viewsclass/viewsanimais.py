@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView
@@ -43,6 +44,7 @@ class RacaCreateView(LoginRequiredMixin, AbrigoMixin, View):
                 "tipo_animal_id": tipo_animal_id,
                 "tipos": tipos,
             })
+        messages.success(request, "Raça cadastrada com sucesso.")
         return redirect("animais:listar_racas")
 
 
@@ -81,6 +83,7 @@ class RacaUpdateView(LoginRequiredMixin, AbrigoMixin, View):
                 "tipo_animal_id": tipo_animal_id,
                 "tipos": tipos,
             })
+        messages.success(request, "Raça atualizada com sucesso.")
         return redirect("animais:listar_racas")
 
 
@@ -91,6 +94,7 @@ class RacaDeleteView(LoginRequiredMixin, AbrigoMixin, View):
             raca_service.excluir_raca(raca_id)
         except ValidationError:
             pass
+        messages.success(request, "Raça excluída com sucesso.")
         return redirect("animais:listar_racas")
 
 
@@ -112,6 +116,7 @@ class AnimalCreateView(LoginRequiredMixin,AbrigoMixin, View):
             dataNascimento=request.POST.get("dataNascimento"),
             foto=request.FILES.get("foto"),
         )
+        messages.success(request, "Animal cadastrado com sucesso.")
         return redirect("animais:listar_animais")
 
 
@@ -144,6 +149,7 @@ class AnimalUpdateView(LoginRequiredMixin,AbrigoMixin, View):
             dataNascimento=request.POST.get("dataNascimento"),
             foto=request.FILES.get("foto"),
         )
+        messages.success(request, "Animal atualizado com sucesso.")
         return redirect("animais:listar_animais")
 
 
@@ -151,6 +157,7 @@ class AnimalUpdateView(LoginRequiredMixin,AbrigoMixin, View):
 class AnimalDeleteView(LoginRequiredMixin,AbrigoMixin, View):
     def post(self, request, animal_id):
         AnimalService().excluir_animal(animal_id)
+        messages.success(request, "Animal excluído com sucesso.")
         return redirect("animais:listar_animais")
 
 

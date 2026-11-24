@@ -10,6 +10,9 @@ class Utils:
             return tipo_usuario
         except ValidationError as e:
             return str(e)
+    def registrar_mensagem_sucesso(self, request, mensagem):
+        from django.contrib import messages
+        messages.success(request, mensagem)
 
 def adoteme_context(request):
     context = {}
