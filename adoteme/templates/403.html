@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Erro 403 - Acesso Negado</title>
+	{% load static %}
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+	<section class="error-shell">
+		<article class="error-card">
+			<header class="error-card-header">
+				<span class="error-code">
+					<span class="icon"><i class="fas fa-shield-halved"></i></span>
+					<span>Erro 403</span>
+				</span>
+				<h1 class="title is-4 has-text-white mt-4 mb-2">Acesso negado</h1>
+				<p class="subtitle is-6 has-text-white-bis mb-0">Você não tem permissão para acessar este recurso.</p>
+			</header>
+
+			<div class="error-card-body">
+				<p class="error-message is-size-6">
+					Se você acredita que isso é um engano, entre em contato com a administração do sistema.
+				</p>
+
+				<div class="error-actions">
+					<a href="{% url 'principal:index_logado' %}" class="button is-brand">
+						<span class="icon"><i class="fas fa-house"></i></span>
+						<span>Ir para o index da área logada</span>
+					</a>
+				</div>
+			</div>
+		</article>
+	</section>
+</body>
+</html>
