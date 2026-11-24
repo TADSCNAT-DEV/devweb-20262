@@ -9,10 +9,12 @@
 		<h1 class="title is-4 mb-1">Raças</h1>
 		<p class="subtitle is-6 mb-0">Gestão das raças cadastradas no sistema</p>
 	</div>
-    <button class="button is-success">
-		<span class="icon"><i class="fas fa-plus"></i></span>
-		<span>Nova Raça</span>
-	</button>
+	{% if TIPO_USUARIO == 'ABRIGO' %}
+		<a href="{% url 'animais:cadastrar_raca' %}" class="button is-success">
+			<span class="icon"><i class="fas fa-plus"></i></span>
+			<span>Nova Raça</span>
+		</a>
+	{% endif %}
 </div>
 
 <div class="box mb-5">
@@ -45,7 +47,9 @@
 					<th>ID</th>
 					<th>Nome da Raça</th>
 					<th>Tipo de Animal</th>
-                    <th class="has-text-centered">Ações</th>
+					{% if TIPO_USUARIO == 'ABRIGO' %}
+						<th class="has-text-centered">Ações</th>
+					{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -59,18 +63,23 @@
 						</span>
 					</td>
 					<td>{{ raca.tipo_animal.nome }}</td>
-                    <td class="has-text-centered">
-						<div class="buttons are-small is-centered">
-							<button class="button is-warning is-light">
-								<span class="icon"><i class="fas fa-edit"></i></span>
-								<span>Editar</span>
-							</button>
-							<button class="button is-danger is-light">
-								<span class="icon"><i class="fas fa-trash"></i></span>
-								<span>Excluir</span>
-							</button>
-						</div>
-					</td>
+					{% if TIPO_USUARIO == 'ABRIGO' %}
+						<td class="has-text-centered">
+							<div class="buttons are-small is-centered">
+								<a class="button is-warning is-light" href="{% url 'animais:atualizar_raca' raca.id %}">
+									<span class="icon"><i class="fas fa-edit"></i></span>
+									<span>Editar</span>
+								</a>
+								<form method="POST" action="{% url 'animais:excluir_raca' raca.id %}" onsubmit="return confirm('Excluir esta raça também removerá os animais vinculados. Deseja continuar?');">
+									{% csrf_token %}
+									<button class="button is-danger is-light" type="submit">
+										<span class="icon"><i class="fas fa-trash"></i></span>
+										<span>Excluir</span>
+									</button>
+								</form>
+							</div>
+						</td>
+					{% endif %}
 				</tr>
 				{% endfor %}
 			</tbody>

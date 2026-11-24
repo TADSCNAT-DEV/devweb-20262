@@ -9,7 +9,7 @@
 		<h1 class="title is-4 mb-1">Tipos de animais</h1>
 		<p class="subtitle is-6 mb-0">Gestão dos tipos cadastrados no sistema</p>
 	</div>
-	{% if TIPO_USUARIO is 'ABRIGO' %}
+	{% if TIPO_USUARIO == 'ABRIGO' %}
 		<a href="{% url 'animais:cadastrar_tipo_animal' %}" class="button is-success">
 			<span class="icon"><i class="fas fa-plus"></i></span>
 			<span>Novo Tipo de Animal</span>
@@ -47,7 +47,7 @@
 					<th>ID</th>
 					<th>Nome do Tipo</th>
 					<th class="has-text-centered">Qtde. de Raças</th>
-					{% if TIPO_USUARIO is 'ABRIGO' %}
+					{% if TIPO_USUARIO == 'ABRIGO' %}
 						<th class="has-text-centered">Ações</th>
 					{% endif %}	
 				</tr>
@@ -63,7 +63,7 @@
 						</span>
 					</td>
 					<td class="has-text-centered">{{ tipo.racas.count }}</td>
-					{% if TIPO_USUARIO is 'ABRIGO' %}
+					{% if TIPO_USUARIO == 'ABRIGO' %}
 						<td class="has-text-centered">
 							<div class="buttons are-small is-centered">
 								<a class="button is-warning is-light" href="{% url 'animais:atualizar_tipo_animal' tipo.id %}">

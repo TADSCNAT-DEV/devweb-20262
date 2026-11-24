@@ -1,0 +1,76 @@
+{% extends 'principal/interna/base.html' %}
+
+{% block title %}{% if raca %}Editar raça{% else %}Cadastrar raça{% endif %} - Adote-me{% endblock %}
+{% block page_title %}{% if raca %}Editar raça{% else %}Cadastrar raça{% endif %}{% endblock %}
+
+{% block content %}
+<div class="is-flex is-justify-content-space-between is-align-items-center mb-5">
+	<div>
+		<h1 class="title is-4 mb-1">{% if raca %}Editar raça{% else %}Nova raça{% endif %}</h1>
+		<p class="subtitle is-6 mb-0">Informe o nome e o tipo de animal da raça.</p>
+	</div>
+	<a href="{% url 'animais:listar_racas' %}" class="button is-light">
+		<span class="icon"><i class="fas fa-arrow-left"></i></span>
+		<span>Voltar</span>
+	</a>
+</div>
+
+{% if erros %}
+	<div class="notification is-danger is-light" role="alert">
+		<p class="has-text-weight-semibold">Não foi possível salvar a raça:</p>
+		<ul>
+			{% for campo, mensagens in erros.items %}
+				{% for mensagem in mensagens %}
+					<li>{{ mensagem }}</li>
+				{% endfor %}
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}
+
+<form
+	method="POST"
+	action="{% if raca %}{% url 'animais:atualizar_raca' raca.id %}{% else %}{% url 'animais:cadastrar_raca' %}{% endif %}"
+>
+	{% csrf_token %}
+	<div class="box">
+		<div class="field">
+			<label class="label" for="nome">Nome da raça</label>
+			<div class="control">
+				<input
+					class="input{% if erros.nome %} is-danger{% endif %}"
+					id="nome"
+					type="text"
+					name="nome"
+					value="{{ nome|default:'' }}"
+					placeholder="Ex.: Labrador"
+					maxlength="100"
+					required
+				>
+			</div>
+		</div>
+
+		<div class="field">
+			<label class="label" for="tipo_animal_id">Tipo de animal</label>
+			<div class="control">
+				<div class="select is-fullwidth{% if erros.tipo_animal %} is-danger{% endif %}">
+					<select id="tipo_animal_id" name="tipo_animal_id" required>
+						<option value="">Selecione um tipo</option>
+						{% for tipo in tipos %}
+							<option value="{{ tipo.id }}"{% if tipo.id|stringformat:'s' == tipo_animal_id|stringformat:'s' %} selected{% endif %}>{{ tipo.nome }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="is-flex is-justify-content-flex-end" style="gap: 0.75rem;">
+		<a href="{% url 'animais:listar_racas' %}" class="button is-light">Cancelar</a>
+		<button class="button is-success" type="submit">
+			<span class="icon"><i class="fas fa-floppy-disk"></i></span>
+			<span>{% if raca %}Salvar alterações{% else %}Cadastrar raça{% endif %}</span>
+		</button>
+	</div>
+</form>
+{% endblock %}

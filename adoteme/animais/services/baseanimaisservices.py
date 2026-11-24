@@ -54,3 +54,26 @@ class RacaService:
         return Raca.objects.all()
     def buscar_racas_por_tipo(self, tipo_animal_id):
         return Raca.objects.filter(tipo_animal_id=tipo_animal_id)
+
+    def cadastrar_raca(self, nome, tipo_animal_id):
+        raca = Raca(nome=nome, tipo_animal_id=tipo_animal_id)
+        raca.full_clean()
+        raca.save()
+        return raca
+
+    def atualizar_raca(self, raca_id, nome, tipo_animal_id):
+        raca = self.obter_raca_por_id(raca_id)
+        if not raca:
+            raise ValidationError("Raça não encontrada")
+
+        raca.nome = nome
+        raca.tipo_animal_id = tipo_animal_id
+        raca.full_clean()
+        raca.save()
+        return raca
+
+    def excluir_raca(self, raca_id):
+        raca = self.obter_raca_por_id(raca_id)
+        if not raca:
+            raise ValidationError("Raça não encontrada")
+        raca.delete()
