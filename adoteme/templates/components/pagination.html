@@ -1,0 +1,29 @@
+{% if page_obj and page_obj.paginator.num_pages > 1 %}
+<nav class="pagination is-centered mt-4 is-rounded" role="navigation" aria-label="pagination">
+    {% if page_obj.has_previous %}
+        <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">Anterior</a>
+    {% else %}
+        <a class="pagination-previous" disabled>Anterior</a>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+        <a class="pagination-next" href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}">Proxima</a>
+    {% else %}
+        <a class="pagination-next" disabled>Proxima</a>
+    {% endif %}
+
+    <ul class="pagination-list">
+        {% for numero in page_obj.paginator.page_range %}
+            {% if numero == page_obj.number %}
+                <li>
+                    <a class="pagination-link is-current" aria-label="Pagina {{ numero }}" aria-current="page">{{ numero }}</a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="pagination-link" aria-label="Ir para pagina {{ numero }}" href="?page={{ numero }}{% if query_string %}&{{ query_string }}{% endif %}">{{ numero }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}

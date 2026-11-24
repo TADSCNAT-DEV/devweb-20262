@@ -76,32 +76,8 @@
 								</button>
 							</div>
 
-							<div id="delete-modal-{{ tipo.id }}" class="modal">
-								<div class="modal-background" onclick="closeDeleteModal('{{ tipo.id }}')"></div>
-								<div class="modal-card">
-									<header class="modal-card-head">
-										<p class="modal-card-title">Confirmar exclusão</p>
-										<button class="delete" aria-label="Fechar" type="button" onclick="closeDeleteModal('{{ tipo.id }}')"></button>
-									</header>
-									<section class="modal-card-body">
-										<p>Deseja realmente excluir o tipo de animal <strong>{{ tipo.nome }}</strong>?</p>
-										{% if tipo.racas.count %}
-											<p class="mt-2 has-text-danger">Este tipo possui raças vinculadas e não poderá ser excluído enquanto elas existirem.</p>
-										{% else %}
-											<p class="mt-2 has-text-grey-dark">Essa ação não poderá ser desfeita.</p>
-										{% endif %}
-									</section>
-									<footer class="modal-card-foot is-justify-content-flex-end">
-										<button class="button" type="button" onclick="closeDeleteModal('{{ tipo.id }}')">Cancelar</button>
-										{% if not tipo.racas.count %}
-											<form method="POST" action="{% url 'animais:excluir_tipo_animal' tipo.id %}">
-												{% csrf_token %}
-												<button class="button is-danger" type="submit">Excluir</button>
-											</form>
-										{% endif %}
-									</footer>
-								</div>
-							</div>
+							{% include 'components/modal_exclusao.html' with idelemento=tipo.id mensagem_pergunta="Deseja realmente excluir o tipo <strong>{{ tipo.nome }}</strong>?" mensagem_avisos="As raças vinculadas a este tipo também serão excluídas. Essa ação não poderá ser desfeita." rota='animais:excluir_tipo_animal' %}
+
 						</td>
 					{% endif %}
 				</tr>

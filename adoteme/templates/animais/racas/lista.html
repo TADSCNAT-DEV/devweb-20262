@@ -75,27 +75,8 @@
 									<span>Excluir</span>
 								</button>
 							</div>
-
-							<div id="delete-modal-{{ raca.id }}" class="modal">
-								<div class="modal-background" onclick="closeDeleteModal('{{ raca.id }}')"></div>
-								<div class="modal-card">
-									<header class="modal-card-head">
-										<p class="modal-card-title">Confirmar exclusão</p>
-										<button class="delete" aria-label="Fechar" type="button" onclick="closeDeleteModal('{{ raca.id }}')"></button>
-									</header>
-									<section class="modal-card-body">
-										<p>Deseja realmente excluir a raça <strong>{{ raca.nome }}</strong>?</p>
-										<p class="mt-2 has-text-grey-dark">Os animais vinculados a esta raça também serão excluídos. Essa ação não poderá ser desfeita.</p>
-									</section>
-									<footer class="modal-card-foot is-justify-content-flex-end">
-										<button class="button" type="button" onclick="closeDeleteModal('{{ raca.id }}')">Cancelar</button>
-										<form method="POST" action="{% url 'animais:excluir_raca' raca.id %}">
-											{% csrf_token %}
-											<button class="button is-danger" type="submit">Excluir</button>
-										</form>
-									</footer>
-								</div>
-							</div>
+							{% include "components/modal_exclusao.html" with idelemento=raca.id mensagem_pergunta="Deseja realmente excluir a raça <strong>"|add:raca.nome|add:"</strong>?" mensagem_avisos="Os animais vinculados a esta raça também serão excluídos. Essa ação não poderá ser desfeita." rota="animais:excluir_raca" %}
+							
 						</td>
 					{% endif %}
 				</tr>

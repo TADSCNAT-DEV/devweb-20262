@@ -1,0 +1,36 @@
+<div id="delete-modal-{{ idelemento}}" class="modal">
+    <div class="modal-background" onclick="closeDeleteModal('{{ idelemento }}')"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Confirmar exclusão</p>
+            <button class="delete" aria-label="Fechar" type="button" onclick="closeDeleteModal('{{ idelemento }}')"></button>
+        </header>
+        <section class="modal-card-body">
+            <p>{{mensagem_pergunta|safe}}</p>
+            <p class="mt-2 has-text-grey-dark">{{mensagem_avisos|safe}}</p>
+        </section>
+        <footer class="modal-card-foot is-justify-content-flex-end">
+            <button class="button" type="button" onclick="closeDeleteModal('{{ idelemento }}')">Cancelar</button>
+            <form method="POST" action="{% url rota idelemento %}">
+                {% csrf_token %}
+                <button class="button is-danger" type="submit">Excluir</button>
+            </form>
+        </footer>
+    </div>
+</div>
+
+<script>
+	function openDeleteModal(idelemento) {
+		const modal = document.getElementById(`delete-modal-${idelemento}`);
+		if (modal) {
+			modal.classList.add('is-active');
+		}
+	}
+
+	function closeDeleteModal(idelemento) {
+		const modal = document.getElementById(`delete-modal-${idelemento}`);
+		if (modal) {
+			modal.classList.remove('is-active');
+		}
+	}
+</script>

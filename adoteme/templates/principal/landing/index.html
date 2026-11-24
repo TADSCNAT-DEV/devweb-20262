@@ -154,7 +154,9 @@
 				</article>
 			</div>
 			{% endfor %}
+			
 		</div>
+		{% include 'components/pagination.html' with page_obj=animais query_string=query_string %}
 	{% else %}
 		<article class="message is-warning is-light">
 			<div class="message-body">

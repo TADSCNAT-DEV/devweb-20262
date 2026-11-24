@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from animais.services.animaisservices import AnimalService
+from django.core.paginator import Paginator
 from animais.services.baseanimaisservices import RacaService, TipoAnimalService
 
 animaiservice = AnimalService()
@@ -31,12 +32,21 @@ def index_publico(request):
     elif disponibilidade == 'nao':
         disponivel = False
 
-    animais = animaiservice.buscar(
+    lista_animais = animaiservice.buscar(
         nome=nome or None,
         tipo_animal_id=tipo or None,
         raca_id=raca or None,
         disponivel=disponivel,
     )
+
+    paginator = Paginator(lista_animais, 2)  # 2 animais por página
+    pagina = request.GET.get('page')
+    animais = paginator.get_page(pagina)
+
+    query_params = request.GET.copy()
+    if 'page' in query_params:
+        del query_params['page']
+    query_string = query_params.urlencode()
 
     context = {
         'animais': animais,
@@ -50,6 +60,7 @@ def index_publico(request):
         'total_animais': animaiservice.listar_animais().count(),
         'total_tipos': tipo_animal_service.listar_tipos_animais().count(),
         'total_adocoes': 0,
+        'query_string': query_string,
     }
     return render(request, 'principal/landing/index.html', context)
 
