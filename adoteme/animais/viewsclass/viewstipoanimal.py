@@ -11,10 +11,12 @@ from animais.services.baseanimaisservices import TipoAnimalService
 class TipoAnimalListView(LoginRequiredMixin, ListView):
     template_name="animais/tipos/lista.html"
     context_object_name="tipos"
+    paginate_by=2
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         busca=self.request.GET.get('busca','').strip()
         context['busca']=busca
+        context['query_string']=f'busca={busca}' if busca else ''
         return context
     def get_queryset(self):
         busca=self.request.GET.get('busca','').strip()
