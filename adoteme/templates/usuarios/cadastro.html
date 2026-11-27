@@ -1,0 +1,115 @@
+{% extends 'principal/landing/base_landing.html' %}
+
+{% block title %}Crie sua conta | Adote-me{% endblock %}
+
+{% block content %}
+<div class="columns is-centered">
+	<div class="column is-8-tablet is-6-desktop">
+		<div class="soft-card p-5">
+			<h1 class="title is-3 mb-2">Crie sua conta</h1>
+			<p class="subtitle is-6 mb-5">Cadastre-se para adotar um animal ou divulgar os animais do seu abrigo.</p>
+
+			{% if form.non_field_errors %}
+			<article class="message is-danger is-light">
+				<div class="message-body">
+					{% for erro in form.non_field_errors %}<p>{{ erro }}</p>{% endfor %}
+				</div>
+			</article>
+			{% endif %}
+
+			<form method="POST" action="{% url 'usuarios:cadastro' %}" novalidate>
+				{% csrf_token %}
+
+				<div class="field">
+					<label class="label" for="nome">Nome completo</label>
+					<div class="control has-icons-left">
+						<input id="nome" name="nome" type="text" maxlength="150" required autofocus
+							class="input{% if form.nome.errors %} is-danger{% endif %}"
+							value="{{ form.nome.value|default_if_none:"" }}" placeholder="Seu nome">
+						<span class="icon is-small is-left"><i class="fas fa-id-card"></i></span>
+					</div>
+					{% for erro in form.nome.errors %}<p class="help is-danger">{{ erro }}</p>{% endfor %}
+				</div>
+
+				<div class="columns mb-0">
+					<div class="column">
+						<div class="field">
+							<label class="label" for="username">Usuário</label>
+							<div class="control has-icons-left">
+								<input id="username" name="username" type="text" maxlength="150" required
+									class="input{% if form.username.errors %} is-danger{% endif %}"
+									value="{{ form.username.value|default_if_none:"" }}" placeholder="Nome de usuário">
+								<span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+							</div>
+							{% for erro in form.username.errors %}<p class="help is-danger">{{ erro }}</p>{% endfor %}
+						</div>
+					</div>
+					<div class="column">
+						<div class="field">
+							<label class="label" for="cpf">CPF</label>
+							<div class="control has-icons-left">
+								<input id="cpf" name="cpf" type="text" inputmode="numeric" maxlength="11" required
+									class="input{% if form.cpf.errors %} is-danger{% endif %}"
+									value="{{ form.cpf.value|default_if_none:"" }}" placeholder="Somente números">
+								<span class="icon is-small is-left"><i class="fas fa-address-card"></i></span>
+							</div>
+							{% for erro in form.cpf.errors %}<p class="help is-danger">{{ erro }}</p>{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<div class="field">
+					<label class="label" for="email">E-mail</label>
+					<div class="control has-icons-left">
+						<input id="email" name="email" type="email" required
+							class="input{% if form.email.errors %} is-danger{% endif %}"
+							value="{{ form.email.value|default_if_none:"" }}" placeholder="voce@exemplo.com">
+						<span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+					</div>
+					{% for erro in form.email.errors %}<p class="help is-danger">{{ erro }}</p>{% endfor %}
+				</div>
+
+				<div class="columns mb-0">
+					<div class="column">
+						<div class="field">
+							<label class="label" for="password">Senha</label>
+							<div class="control has-icons-left">
+								<input id="password" name="password" type="password" required
+									class="input{% if form.password.errors %} is-danger{% endif %}"
+									placeholder="Crie uma senha">
+								<span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+							</div>
+							{% for erro in form.password.errors %}<p class="help is-danger">{{ erro }}</p>{% endfor %}
+						</div>
+					</div>
+					<div class="column">
+						<div class="field">
+							<label class="label" for="password_confirm">Confirme a senha</label>
+							<div class="control has-icons-left">
+								<input id="password_confirm" name="password_confirm" type="password" required
+									class="input{% if form.password_confirm.errors %} is-danger{% endif %}"
+									placeholder="Repita a senha">
+								<span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+							</div>
+							{% for erro in form.password_confirm.errors %}<p class="help is-danger">{{ erro }}</p>{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<div class="field mt-4">
+					<div class="control">
+						<button type="submit" class="button is-dark is-medium is-fullwidth">
+							<span class="icon"><i class="fas fa-user-plus"></i></span>
+							<span>Criar conta</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="has-text-centered mt-4">
+					Já tem uma conta? <a href="{% url 'usuarios:login' %}">Entrar</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

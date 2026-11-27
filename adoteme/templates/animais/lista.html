@@ -102,6 +102,7 @@
             <strong>Total de animais listados:</strong> {{ animais|length }}
         </p>
     </div>
+    {% include "components/pagination.html" with query_string=query_string %}
 {% else %}
     <article class="message is-warning">
         <div class="message-body has-text-centered">

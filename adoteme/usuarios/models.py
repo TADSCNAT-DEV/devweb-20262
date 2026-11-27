@@ -11,13 +11,11 @@ class Usuario(User):
     def clean(self):
         erros={}
         if self.cpf and not self.cpf.isdigit():
-            erros["cpf"].append("CPF deve conter apenas números.")
+            erros.setdefault("cpf", []).append("CPF deve conter apenas números.")
         if Usuario.objects.filter(cpf=self.cpf).exclude(pk=self.pk).exists():
-            erros["cpf"].append("CPF já está em uso.")
+            erros.setdefault("cpf", []).append("CPF já está em uso.")
         if Usuario.objects.filter(email=self.email).exclude(pk=self.pk).exists():
             erros["email"]="Email já está em uso."
-        if Usuario.objects.filter(username=self.username).exclude(pk=self.pk).exists():
-            erros["username"]="Nome de usuário já existe."
         if len(self.nome) < 3:
             erros["nome"]="O nome deve ter pelo menos 3 caracteres."
         if erros:

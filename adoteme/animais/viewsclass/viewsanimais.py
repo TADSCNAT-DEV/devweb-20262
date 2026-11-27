@@ -13,6 +13,7 @@ from principal.mixins import AbrigoMixin
 class RacaListView(LoginRequiredMixin, ListView):
     template_name = "animais/racas/lista.html"
     context_object_name = "racas"
+    paginate_by = 2
 
     def get_queryset(self):
         busca = self.request.GET.get("busca", "").strip()
@@ -20,7 +21,9 @@ class RacaListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["busca"] = self.request.GET.get("busca", "").strip()
+        busca = self.request.GET.get("busca", "").strip()
+        context["busca"] = busca
+        context['query_string']=f'busca={busca}' if busca else ''
         return context
 
 
@@ -164,12 +167,14 @@ class AnimalDeleteView(LoginRequiredMixin,AbrigoMixin, View):
 class AnimalListView(LoginRequiredMixin, ListView):
     template_name = "animais/lista.html"
     context_object_name = "animais"
-
+    paginate_by = 2
     def get_queryset(self):
         busca = self.request.GET.get("busca", "").strip()
         return AnimalService().buscar(nome=busca or None)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["busca"] = self.request.GET.get("busca", "").strip()
+        busca = self.request.GET.get("busca", "").strip()
+        context["busca"] = busca
+        context['query_string']=f'busca={busca}' if busca else ''
         return context

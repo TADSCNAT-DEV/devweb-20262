@@ -1,7 +1,9 @@
 from usuarios.models import Usuario,Perfil
 from django.core.exceptions import ValidationError
+from django.db import transaction
 
 class UsuarioService:
+    @transaction.atomic
     def criar_usuario(self, username, email, password,cpf, nome, tipo):
         usuario = Usuario(username=username, email=email,cpf=cpf, nome=nome, tipo=tipo)
         usuario.set_password(password)
